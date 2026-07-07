@@ -1,77 +1,1072 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2C Legal Advisory</title>
-<style>
-body{margin:0;font-family:Inter,Arial,sans-serif;background:#f7fbfb;color:#123}
-header{padding:80px 8%;background:linear-gradient(135deg,#0b5d6e,#57d8c3);color:#fff}
-section{padding:70px 8%}
-h1{font-size:3rem;margin:.2em 0}
-h2{color:#0b5d6e}
-.btn{display:inline-block;padding:14px 24px;background:#57d8c3;color:#08333d;text-decoration:none;border-radius:10px;font-weight:700}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.card{background:#fff;padding:24px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
-footer{padding:40px;text-align:center;background:#08333d;color:#fff}
-.chat{background:#0f172a;color:#fff;border-radius:16px;padding:20px}
-.msg{background:#1e293b;padding:12px;border-radius:10px;margin:10px 0}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2C Legal — Navigate Risk. Build Value. Scale with Confidence.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-0: #070f1c;
+            --bg-1: #0c1728;
+            --bg-2: #12213a;
+            --card: #101d33;
+            --card-border: #22314a;
+            --ink-0: #eef2f7;
+            --ink-1: #aab6c8;
+            --ink-2: #7e8ba0;
+            --accent: #5eead4;
+            --accent-2: #34d399;
+            --accent-soft: rgba(94, 234, 212, 0.12);
+            --amber: #f0b84f;
+            --radius: 14px;
+            --maxw: 1180px;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            background: var(--bg-0);
+            color: var(--ink-0);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1,
+        h2,
+        h3,
+        .display {
+            font-family: 'Sora', sans-serif;
+            letter-spacing: -0.02em;
+            margin: 0;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .wrap {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+        .eyebrow::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+            white-space: nowrap;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #04120f;
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px -8px rgba(94, 234, 212, 0.55);
+        }
+        .btn-ghost {
+            border-color: var(--card-border);
+            color: var(--ink-0);
+            background: transparent;
+        }
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 13px;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(7, 15, 28, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        nav.wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 58px;
+            width: auto;
+            display: block;
+        }
+        footer .logo img {
+            height: 72px;
+        }
+
+        .navlinks {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+            font-size: 14px;
+            color: var(--ink-1);
+        }
+        .navlinks a {
+            transition: color .15s ease;
+        }
+        .navlinks a:hover {
+            color: var(--ink-0);
+        }
+        .navlinks .has-caret {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: default;
+        }
+        .caret {
+            width: 8px;
+            height: 8px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(45deg);
+            margin-top: -3px;
+        }
+        .navactions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .burger {
+            display: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: transparent;
+        }
+        .burger span,
+        .burger span::before,
+        .burger span::after {
+            content: '';
+            display: block;
+            width: 16px;
+            height: 2px;
+            background: var(--ink-0);
+            position: relative;
+        }
+        .burger span::before {
+            position: absolute;
+            top: -5px;
+        }
+        .burger span::after {
+            position: absolute;
+            top: 5px;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 96px 0 80px;
+            background:
+                radial-gradient(ellipse 900px 500px at 85% 20%, rgba(94, 234, 212, 0.10), transparent 60%),
+                linear-gradient(180deg, var(--bg-0), var(--bg-1));
+        }
+        .skyline {
+            position: absolute;
+            right: -40px;
+            bottom: 0;
+            width: 60%;
+            max-width: 760px;
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .hero .wrap {
+            position: relative;
+            z-index: 2;
+        }
+        .hero-inner {
+            max-width: 640px;
+        }
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.12;
+            margin-top: 18px;
+        }
+        .hero h1 .accent-line {
+            color: var(--accent);
+            display: block;
+        }
+        .hero p.lead {
+            color: var(--ink-1);
+            font-size: 16px;
+            max-width: 520px;
+            margin: 22px 0 32px;
+        }
+        .hero-ctas {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .trustbar {
+            padding: 36px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            background: var(--bg-1);
+        }
+        .trustbar .label {
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink-2);
+            margin-bottom: 18px;
+        }
+        .logos {
+            display: flex;
+            align-items: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            color: var(--ink-1);
+            font-weight: 600;
+            font-size: 15px;
+            opacity: 0.8;
+        }
+
+        /* Section shell */
+        section {
+            padding: 88px 0;
+        }
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            margin-bottom: 44px;
+            flex-wrap: wrap;
+        }
+        .section-head h2 {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.25;
+        }
+        .section-head h2 .accent {
+            color: var(--accent);
+        }
+        .section-head .view-all {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .section-head p.sub {
+            color: var(--ink-1);
+            max-width: 520px;
+            margin-top: 12px;
+        }
+
+        /* Practice areas */
+        .practice-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--card-border);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .practice-card {
+            background: var(--card);
+            padding: 28px 22px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: background .2s ease;
+        }
+        .practice-card:hover {
+            background: var(--bg-2);
+        }
+        .practice-card .icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 17px;
+        }
+        .practice-card h3 {
+            font-size: 14.5px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .practice-card p {
+            font-size: 12.5px;
+            color: var(--ink-2);
+            margin: 0;
+        }
+
+        /* AI assessment */
+        .assess {
+            background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .assess-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+        .assess-copy h2 {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 18px;
+        }
+        .assess-copy p {
+            color: var(--ink-1);
+            margin-bottom: 22px;
+        }
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 11px;
+        }
+        .checklist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14.5px;
+            color: var(--ink-0);
+        }
+        .checklist .tick {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex: none;
+        }
+        .fineprint {
+            font-size: 12px;
+            color: var(--ink-2);
+            margin-top: 12px;
+        }
+
+        .score-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .score-left {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 14px;
+            border-right: 1px solid var(--card-border);
+            padding-right: 20px;
+        }
+        .gauge-label {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink-2);
+        }
+        .gauge-wrap {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+        .gauge-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+        }
+        .gauge-sub {
+            font-size: 12.5px;
+            color: var(--ink-1);
+            max-width: 170px;
+        }
+        .risk-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            justify-content: center;
+        }
+        .risk-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 13.5px;
+        }
+        .risk-row .name {
+            color: var(--ink-1);
+        }
+        .pill {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 99px;
+        }
+        .pill.good {
+            background: rgba(52, 211, 153, 0.14);
+            color: var(--accent-2);
+        }
+        .pill.medium {
+            background: rgba(240, 184, 79, 0.14);
+            color: var(--amber);
+        }
+        .pill.low {
+            background: rgba(240, 120, 79, 0.14);
+            color: #f0a15f;
+        }
+        .score-card .cta-row {
+            grid-column: 1/-1;
+            text-align: center;
+            padding-top: 6px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        /* Insights */
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+        .insight-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .insight-thumb {
+            height: 130px;
+            background:
+                radial-gradient(circle at 30% 30%, rgba(94, 234, 212, 0.25), transparent 60%),
+                linear-gradient(135deg, var(--bg-2), #0a1424);
+            position: relative;
+        }
+        .insight-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 26px);
+        }
+        .insight-body {
+            padding: 18px 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+        }
+        .insight-date {
+            font-size: 11px;
+            color: var(--ink-2);
+        }
+        .insight-title {
+            font-size: 14.5px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .insight-link {
+            margin-top: auto;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* About */
+        .about {
+            background: var(--bg-1);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 56px;
+            align-items: start;
+        }
+        .about-copy h2 {
+            font-size: 34px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 18px;
+        }
+        .about-copy p {
+            color: var(--ink-1);
+            margin-bottom: 16px;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: var(--card-border);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .stat-card {
+            background: var(--card);
+            padding: 26px 22px;
+        }
+        .stat-num {
+            font-family: 'Sora', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .stat-label {
+            font-size: 12.5px;
+            color: var(--ink-2);
+            margin-top: 6px;
+        }
+        .about-values {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 26px;
+        }
+        .about-value {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .about-value .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 7px;
+            flex: none;
+        }
+        .about-value h4 {
+            font-size: 14.5px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .about-value p {
+            font-size: 13px;
+            color: var(--ink-2);
+            margin: 0;
+        }
+
+        /* CTA */
+        .cta-band {
+            background: linear-gradient(135deg, #0d3b34, #0a2a2e);
+            border-radius: var(--radius);
+            margin: 0 32px;
+            padding: 44px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            max-width: calc(var(--maxw) - 64px);
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .cta-band h2 {
+            font-size: 26px;
+            font-weight: 700;
+            max-width: 420px;
+        }
+        .cta-band p {
+            color: #bfe3da;
+            font-size: 14px;
+            max-width: 380px;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 64px 0 28px;
+            background: var(--bg-0);
+        }
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr repeat(4, 1fr);
+            gap: 32px;
+            padding-bottom: 44px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-brand p {
+            color: var(--ink-2);
+            font-size: 13.5px;
+            margin-top: 14px;
+            max-width: 260px;
+        }
+        .footer-col h5 {
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-2);
+            margin-bottom: 16px;
+        }
+        .footer-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .footer-col a {
+            font-size: 13.5px;
+            color: var(--ink-1);
+        }
+        .footer-col a:hover {
+            color: var(--accent);
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 26px;
+            font-size: 12.5px;
+            color: var(--ink-2);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .socials {
+            display: flex;
+            gap: 14px;
+        }
+        .socials a {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        @media (max-width:960px) {
+            .practice-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .assess-grid,
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            .insight-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-top {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+        }
+        @media (max-width:680px) {
+            .navlinks {
+                display: none;
+            }
+            .burger {
+                display: flex;
+            }
+            .navactions .btn-ghost.book-desktop {
+                display: none;
+            }
+            .practice-grid,
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+            .score-card {
+                grid-template-columns: 1fr;
+            }
+            .score-left {
+                border-right: none;
+                border-bottom: 1px solid var(--card-border);
+                padding-right: 0;
+                padding-bottom: 20px;
+            }
+            .cta-band {
+                flex-direction: column;
+                align-items: flex-start;
+                margin: 0 16px;
+            }
+            .wrap {
+                padding: 0 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<header>
-<img src="2clogo.png" style="height:90px;background:#fff;padding:10px;border-radius:12px">
-<h1>Legal Infrastructure for Companies That Move Fast.</h1>
-<p>Protect your company before legal mistakes become expensive. Corporate, commercial, startup and data protection legal advisory built for ambitious founders.</p>
-<a class="btn" href="#ai">Start Your AI Legal Assessment</a>
-</header>
 
-<section>
-<h2>Built for Startups. Not Courtrooms.</h2>
-  <p>Traditional firms react to legal problems. We help prevent them. We combine startup expertise, commercial thinking and technology so founders can move quickly without exposing their businesses to avoidable legal risk.</p>
-<div class="grid">
-<div class="card"><h3>Startup Law</h3><p>Company formation, founder agreements and governance.</p></div>
-<div class="card"><h3>Data Protection</h3><p>NDPA compliance, privacy policies and governance.</p></div>
-<div class="card"><h3>Commercial Contracts</h3><p>Customer, vendor and employment agreements.</p></div>
-<div class="card"><h3>Investment Readiness</h3><p>Due diligence, SAFE notes and investor documentation.</p></div>
-</div>
-</section>
+    <header>
+        <nav class="wrap">
+            <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
+            <div class="navlinks">
+                <a href="#about">About</a>
+                <span class="has-caret">Services <span class="caret"></span></span>
+                <a href="#assessment">AI Legal Assessment</a>
+                <a href="#insights">Insights</a>
+                <a href="#footer-resources">Resources</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="navactions">
+                <a href="#contact" class="btn btn-primary btn-sm book-desktop">Book a Strategy Call</a>
+                <button class="burger" aria-label="Menu"><span></span></button>
+            </div>
+        </nav>
+    </header>
 
-<section>
-<h2>Why Founders Choose 2C</h2>
-<div class="grid">
-<div class="card"><strong>Traditional Firms</strong><ul><li>Reactive</li><li>Legal jargon</li><li>Slow turnaround</li></ul></div>
-<div class="card"><strong>2C Legal Advisory</strong><ul><li>Startup-first advice</li><li>Technology focused</li><li>Prevent problems early</li></ul></div>
-</div>
-</section>
+    <section class="hero">
+        <svg class="skyline" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMax slice">
+            <defs>
+                <linearGradient id="skyfade" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#5eead4" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#5eead4" stop-opacity="0.05" />
+                </linearGradient>
+            </defs>
+            <g fill="url(#skyfade)">
+                <rect x="20" y="220" width="34" height="180" />
+                <rect x="64" y="160" width="28" height="240" />
+                <rect x="100" y="200" width="40" height="200" />
+                <rect x="150" y="120" width="30" height="280" />
+                <rect x="190" y="180" width="26" height="220" />
+                <rect x="226" y="90" width="36" height="310" />
+                <rect x="272" y="150" width="24" height="250" />
+                <rect x="306" y="60" width="42" height="340" />
+                <rect x="358" y="170" width="28" height="230" />
+                <rect x="396" y="110" width="34" height="290" />
+                <rect x="440" y="200" width="30" height="200" />
+                <rect x="480" y="140" width="26" height="260" />
+                <rect x="516" y="190" width="36" height="210" />
+            </g>
+            <g stroke="#5eead4" stroke-opacity="0.25" stroke-width="1">
+                <line x1="0" y1="330" x2="600" y2="330" />
+            </g>
+        </svg>
+        <div class="wrap">
+            <div class="hero-inner">
+                <span class="eyebrow">Legal partners for innovation</span>
+                <h1>Navigate Risk.<br />Build Value.<br /><span class="accent-line">Scale with Confidence.</span></h1>
+                <p class="lead">2C Legal is a technology-driven law firm that helps startups and innovative companies build robust legal foundations, protect what matters — from proprietary code to trademarks — and attract investment.</p>
+                <div class="hero-ctas">
+                    <a href="#assessment" class="btn btn-primary">Start AI Legal Assessment →</a>
+                    <a href="#contact" class="btn btn-ghost">Book a Call</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<section id="ai">
-<h2>Meet your AI Legal Assessment</h2>
-<p>Instead of another boring questionnaire, founders complete an intelligent assessment that identifies legal risks and prepares a personalized legal readiness report before speaking with a lawyer.</p>
-<div class="card">
-<h3>AI Assessment Placeholder</h3>
-<p>Replace this container with your embedded AI tool.</p>
-</div>
-</section>
+    <div class="trustbar">
+        <div class="wrap">
+            <div class="label">Trusted by innovative companies</div>
+            <div class="logos">
+                <span>budgIT</span><span>⌘ Kudi</span><span>⚡Shuttlers</span><span>BuuPass</span><span>ZIKOKO</span>
+            </div>
+        </div>
+    </div>
 
-<section>
-<h2>How It Works</h2>
-<ol>
-<li>Complete the AI assessment.</li>
-<li>Receive a Legal Readiness Score.</li>
-<li>A lawyer reviews your responses.</li>
-<li>Book a strategy session.</li>
-</ol>
-</section>
+    <section id="services">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Practice areas</span>
+                    <h2 style="margin-top:12px;">Comprehensive Legal Solutions.<br />For <span class="accent">Modern Businesses.</span></h2>
+                </div>
+                <a href="#footer-resources" class="view-all">View All Services →</a>
+            </div>
+            <div class="practice-grid">
+                <div class="practice-card"><div class="icon">◈</div><h3>Startup &amp; Company Formation</h3><p>Incorporation, structuring, and governance from day one.</p></div>
+                <div class="practice-card"><div class="icon">▤</div><h3>Commercial &amp; Contract Advisory</h3><p>Agreements that protect your interests without slowing you down.</p></div>
+                <div class="practice-card"><div class="icon">◇</div><h3>Technology Law</h3><p>Guidance for software, platforms, and digital products.</p></div>
+                <div class="practice-card"><div class="icon">✦</div><h3>Intellectual Property &amp; Software Licensing</h3><p>Trademark, copyright, and patent protection, plus licensing agreements that govern how your software is used, resold, or embedded by others.</p></div>
+                <div class="practice-card"><div class="icon">◍</div><h3>Data Protection &amp; Privacy</h3><p>Compliance frameworks for how you collect and use data.</p></div>
+                <div class="practice-card"><div class="icon">⬡</div><h3>Employment &amp; HR Advisory</h3><p>Contracts, policies, and dispute resolution for growing teams.</p></div>
+                <div class="practice-card"><div class="icon">◎</div><h3>Corporate Governance</h3><p>Board structures and processes that scale with you.</p></div>
+                <div class="practice-card"><div class="icon">📈</div><h3>Investment &amp; Fundraising</h3><p>Deal structuring, due diligence, and investor-ready documentation.</p></div>
+            </div>
+        </div>
+    </section>
 
-<section>
-<h2>Ready to Build With Confidence?</h2>
-<p>Protect your startup before legal issues slow your growth.</p>
-<a class="btn">Book a Strategy Session</a>
-</section>
+    <section class="assess" id="assessment">
+        <div class="wrap">
+            <div class="assess-grid">
+                <div class="assess-copy">
+                    <span class="eyebrow">AI Legal Assessment</span>
+                    <h2 style="margin-top:14px;">Understand Your Legal Risks Before They Become Problems.</h2>
+                    <p>Our AI-powered assessment analyzes your startup across key legal areas and gives you a Legal Readiness Score with actionable recommendations.</p>
+                    <ul class="checklist">
+                        <li><span class="tick">✓</span> Company Structure</li>
+                        <li><span class="tick">✓</span> Contracts &amp; Agreements</li>
+                        <li><span class="tick">✓</span> Data Privacy &amp; Compliance</li>
+                        <li><span class="tick">✓</span> Employment Practices</li>
+                        <li><span class="tick">✓</span> IP Protection &amp; Software Licensing</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Start Your Free Assessment →</a>
+                    <div class="fineprint">No sign up required · 3 minutes · No credit card needed</div>
+                </div>
 
-<footer>
-<h3>2C Legal Advisory</h3>
-<p>Corporate & Commercial Law Practice • Startup Law • Data Protection</p>
-</footer>
-</body></html>
+                <div class="score-card">
+                    <div class="score-left">
+                        <div class="gauge-label">Your Legal Readiness Score</div>
+                        <div class="gauge-wrap">
+                            <svg viewBox="0 0 150 150" width="150" height="150">
+                                <circle cx="75" cy="75" r="62" fill="none" stroke="#1c2c44" stroke-width="12" />
+                                <circle id="gaugeArc" cx="75" cy="75" r="62" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="389.5" stroke-dashoffset="389.5" transform="rotate(-90 75 75)" />
+                                <defs>
+                                    <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
+                                        <stop offset="0%" stop-color="#5eead4" />
+                                        <stop offset="100%" stop-color="#34d399" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <div class="gauge-num">76</div>
+                        </div>
+                        <div class="gauge-sub">You're on the right track. Some areas need improvement.</div>
+                    </div>
+                    <div class="risk-list">
+                        <div style="font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); margin-bottom:2px;">Risk Overview</div>
+                        <div class="risk-row"><span class="name">Company Structure</span><span class="pill good">Good</span></div>
+                        <div class="risk-row"><span class="name">Contracts</span><span class="pill medium">Fair</span></div>
+                        <div class="risk-row"><span class="name">Data Protection</span><span class="pill good">Good</span></div>
+                        <div class="risk-row"><span class="name">Employment</span><span class="pill low">Low</span></div>
+                        <div class="risk-row"><span class="name">IP &amp; Licensing</span><span class="pill medium">Fair</span></div>
+                    </div>
+                    <div class="cta-row"><a href="#contact" class="btn btn-ghost btn-sm">View Full Report</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="insights">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">Insights &amp; Resources</span>
+                    <h2 style="margin-top:12px;">Legal Insights. Real Impact.</h2>
+                    <p class="sub">Practical articles, guides and updates to help founders make smarter legal decisions.</p>
+                </div>
+                <a href="#footer-resources" class="view-all">View All Articles →</a>
+            </div>
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <div class="insight-thumb"></div>
+                    <div class="insight-body">
+                        <div class="insight-date">May 30, 2026</div>
+                        <div class="insight-title">NDPA Compliance: 7 Steps Every Startup Should Take</div>
+                        <a href="#" class="insight-link">Read More →</a>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-thumb"></div>
+                    <div class="insight-body">
+                        <div class="insight-date">May 20, 2026</div>
+                        <div class="insight-title">Convertible Notes: Key Legal Considerations for Founders</div>
+                        <a href="#" class="insight-link">Read More →</a>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-thumb"></div>
+                    <div class="insight-body">
+                        <div class="insight-date">May 09, 2026</div>
+                        <div class="insight-title">Protecting Your SaaS Product: IP Strategies &amp; Software Licensing That Work</div>
+                        <a href="#" class="insight-link">Read More →</a>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-thumb"></div>
+                    <div class="insight-body">
+                        <div class="insight-date">May 05, 2026</div>
+                        <div class="insight-title">Investor Due Diligence: What Startups Must Prepare</div>
+                        <a href="#" class="insight-link">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="wrap">
+            <div class="about-grid">
+                <div class="about-copy">
+                    <span class="eyebrow">About 2C Legal</span>
+                    <h2 style="margin-top:14px;">Built for founders who move fast — and still need to get it right.</h2>
+                    <p>2C Legal was started because too many founders were learning legal lessons the expensive way: after a bad contract, a missed compliance step, or a dispute over who actually owns the code. We work as an embedded legal partner for startups and technology companies, translating dense legal requirements into clear decisions you can act on.</p>
+                    <p>Our team combines traditional corporate and commercial law with deep familiarity in technology, data, and intellectual property — including trademark and patent protection, and the software licensing agreements that determine how your product can be sold, white-labeled, or integrated by others. We pair that expertise with our AI Legal Assessment tool, so every engagement starts with a clear picture of where you stand.</p>
+                    <div class="about-values">
+                        <div class="about-value"><span class="dot"></span><div><h4>Built for builders</h4><p>We speak the language of product and engineering teams, not just legal departments.</p></div></div>
+                        <div class="about-value"><span class="dot"></span><div><h4>Protection first</h4><p>From IP management to data privacy, we close gaps before they become liabilities.</p></div></div>
+                        <div class="about-value"><span class="dot"></span><div><h4>Investment-ready</h4><p>We prepare the documentation and structure that due diligence actually looks for.</p></div></div>
+                    </div>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Startups &amp; companies advised</div></div>
+                    <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Contracts &amp; licenses drafted</div></div>
+                    <div class="stat-card"><div class="stat-num">₦2.4B+</div><div class="stat-label">Funding rounds supported</div></div>
+                    <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Industries served</div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="cta-band">
+            <div>
+                <h2>Let's Build Something Great Together.</h2>
+                <p>Whether you're launching, scaling, or raising, we're here to be your trusted legal partner.</p>
+            </div>
+            <a href="#" class="btn btn-primary">Book a Strategy Call</a>
+        </div>
+    </section>
+
+    <footer id="footer-resources">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
+                    <p>A technology-driven law firm helping startups build robust legal foundations, protect IP and software, and scale with confidence.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#assessment">AI Legal Assessment</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Practice Areas</h5>
+                    <ul>
+                        <li><a href="#services">Technology Law</a></li>
+                        <li><a href="#services">IP &amp; Software Licensing</a></li>
+                        <li><a href="#services">All Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="#insights">Insights</a></li>
+                        <li><a href="#">Guides</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Templates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><a href="mailto:hello@2clegal.com">hello@2clegal.com</a></li>
+                        <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>© 2026 2C Legal. All rights reserved.</div>
+                <div class="socials">
+                    <a href="#" aria-label="X">𝕏</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="Instagram">◎</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const burger = document.querySelector('.burger');
+        const navlinks = document.querySelector('.navlinks');
+        burger.addEventListener('click', () => {
+            const open = navlinks.style.display === 'flex';
+            navlinks.style.display = open ? 'none' : 'flex';
+            navlinks.style.flexDirection = 'column';
+            navlinks.style.position = 'absolute';
+            navlinks.style.top = '64px';
+            navlinks.style.left = '0';
+            navlinks.style.right = '0';
+            navlinks.style.background = '#0c1728';
+            navlinks.style.padding = '20px 32px';
+            navlinks.style.gap = '18px';
+            navlinks.style.borderBottom = '1px solid rgba(255,255,255,0.06)';
+        });
+
+        // Animate gauge on load
+        window.addEventListener('load', () => {
+            const arc = document.getElementById('gaugeArc');
+            const circumference = 2 * Math.PI * 62;
+            const score = 76;
+            const offset = circumference - (score / 100) * circumference;
+            requestAnimationFrame(() => {
+                arc.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)';
+                arc.style.strokeDashoffset = offset;
+            });
+        });
+    </script>
+
+</body>
+</html>
