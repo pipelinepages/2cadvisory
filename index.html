@@ -474,7 +474,7 @@
             text-align: right;
         }
 
-        /* Startup Blueprint Series (NEW) */
+        /* Startup Blueprint Series */
         .blueprint {
             background: var(--bg-0);
         }
@@ -672,56 +672,6 @@
             border-top: 1px solid var(--card-border);
         }
 
-        /* Insights */
-        .insight-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
-        }
-        .insight-card {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .insight-thumb {
-            height: 130px;
-            background:
-                radial-gradient(circle at 30% 30%, rgba(94, 234, 212, 0.25), transparent 60%),
-                linear-gradient(135deg, var(--bg-2), #0a1424);
-            position: relative;
-        }
-        .insight-thumb::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px 26px);
-        }
-        .insight-body {
-            padding: 18px 18px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            flex: 1;
-        }
-        .insight-date {
-            font-size: 11px;
-            color: var(--ink-2);
-        }
-        .insight-title {
-            font-size: 14.5px;
-            font-weight: 600;
-            line-height: 1.4;
-        }
-        .insight-link {
-            margin-top: auto;
-            font-size: 13px;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
         /* About */
         .about {
             background: var(--bg-1);
@@ -907,9 +857,6 @@
             .about-grid {
                 grid-template-columns: 1fr;
             }
-            .insight-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
             .footer-top {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -960,8 +907,7 @@
             .navactions .btn-ghost.book-desktop {
                 display: none;
             }
-            .practice-grid,
-            .insight-grid {
+            .practice-grid {
                 grid-template-columns: 1fr;
             }
             .footer-top {
@@ -1009,7 +955,6 @@
                 <a href="#about">About</a>
                 <span class="has-caret">Services <span class="caret"></span></span>
                 <a href="#assessment">AI Legal Assessment</a>
-                <a href="#insights">Insights</a>
                 <a href="#footer-resources">Resources</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -1192,7 +1137,7 @@
         </div>
     </section>
 
-    <!-- NEW STARTUP BLUEPRINT SECTION -->
+    <!-- Startup Blueprint Section -->
     <section class="blueprint">
         <div class="wrap">
             <div class="section-head">
@@ -1270,53 +1215,6 @@
         </div>
     </section>
 
-    <section id="insights">
-        <div class="wrap">
-            <div class="section-head">
-                <div>
-                    <span class="eyebrow">Insights &amp; Resources</span>
-                    <h2 style="margin-top:12px;">Legal Insights. Real Impact.</h2>
-                    <p class="sub">Practical articles, guides and updates to help founders make smarter legal decisions.</p>
-                </div>
-                <a href="#footer-resources" class="view-all">View All Articles →</a>
-            </div>
-            <div class="insight-grid">
-                <div class="insight-card">
-                    <div class="insight-thumb"></div>
-                    <div class="insight-body">
-                        <div class="insight-date">May 30, 2026</div>
-                        <div class="insight-title">NDPA Compliance: 7 Steps Every Startup Should Take</div>
-                        <a href="#" class="insight-link">Read More →</a>
-                    </div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-thumb"></div>
-                    <div class="insight-body">
-                        <div class="insight-date">May 20, 2026</div>
-                        <div class="insight-title">Convertible Notes: Key Legal Considerations for Founders</div>
-                        <a href="#" class="insight-link">Read More →</a>
-                    </div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-thumb"></div>
-                    <div class="insight-body">
-                        <div class="insight-date">May 09, 2026</div>
-                        <div class="insight-title">Protecting Your SaaS Product: IP Strategies &amp; Software Licensing That Work</div>
-                        <a href="#" class="insight-link">Read More →</a>
-                    </div>
-                </div>
-                <div class="insight-card">
-                    <div class="insight-thumb"></div>
-                    <div class="insight-body">
-                        <div class="insight-date">May 05, 2026</div>
-                        <div class="insight-title">Investor Due Diligence: What Startups Must Prepare</div>
-                        <a href="#" class="insight-link">Read More →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <section class="about" id="about">
         <div class="wrap">
             <div class="about-grid">
@@ -1377,7 +1275,6 @@
                 <div class="footer-col">
                     <h5>Resources</h5>
                     <ul>
-                        <li><a href="#insights">Insights</a></li>
                         <li><a href="#">Guides</a></li>
                         <li><a href="#">FAQs</a></li>
                         <li><a href="#">Templates</a></li>
