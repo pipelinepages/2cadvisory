@@ -349,7 +349,7 @@
             line-height: 1.5;
         }
 
-        /* Approach Table (NEW) */
+        /* Approach Table */
         .approach {
             background: var(--bg-0);
             overflow: hidden;
@@ -402,6 +402,76 @@
             color: var(--ink-0);
             font-size: 14.5px;
             padding-left: 18px;
+        }
+
+        /* Founder Section (NEW) */
+        .founder {
+            background: var(--bg-1);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .founder-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .founder-img-placeholder {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            aspect-ratio: 3 / 4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ink-2);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            min-height: 380px;
+        }
+        .founder-content {
+            padding-top: 4px;
+        }
+        .founder-content .eyebrow {
+            margin-bottom: 16px;
+        }
+        .founder-content blockquote {
+            margin: 0 0 24px 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 26px;
+            font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
+            color: var(--ink-0);
+        }
+        .founder-content .attribution {
+            color: var(--ink-1);
+            font-size: 14.5px;
+            margin-bottom: 32px;
+        }
+        .founder-credential-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            width: 100%;
+        }
+        .credential-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-size: 14px;
+        }
+        .credential-row:first-child {
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .credential-row .label {
+            color: var(--ink-1);
+        }
+        .credential-row .value {
+            color: var(--ink-0);
+            text-align: right;
         }
 
         /* AI assessment */
@@ -766,6 +836,14 @@
             .practice-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .founder-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .founder-img-placeholder {
+                aspect-ratio: 16 / 9;
+                min-height: 250px;
+            }
             .assess-grid,
             .about-grid {
                 grid-template-columns: 1fr;
@@ -839,6 +917,16 @@
             }
             .wrap {
                 padding: 0 20px;
+            }
+            .founder-content blockquote {
+                font-size: 22px;
+            }
+            .credential-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .credential-row .value {
+                text-align: left;
             }
         }
     </style>
@@ -952,7 +1040,7 @@
         </div>
     </section>
 
-    <!-- NEW APPROACH SECTION -->
+    <!-- Approach Section -->
     <section class="approach">
         <div class="wrap">
             <div class="section-head">
@@ -996,6 +1084,41 @@
                 <div class="row-item label col-1">Compliance posture</div>
                 <div class="row-item col-2">Reactive, filed when required</div>
                 <div class="row-item col-3">Built in from incorporation onward</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW FOUNDER SECTION -->
+    <section class="founder">
+        <div class="wrap">
+            <div class="founder-grid">
+                <div class="founder-img-placeholder">
+                    Founder photo<br />to be added
+                </div>
+                <div class="founder-content">
+                    <span class="eyebrow">Founder &amp; Principal</span>
+                    <blockquote>"Founders don't need more legal jargon. They need someone who tells them clearly what protects them and what doesn't."</blockquote>
+                    <div class="attribution">Comforter Bolere Ketebu (CBK) — Founder &amp; Principal, 2C Legal Advisory</div>
+                    
+                    <div class="founder-credential-list">
+                        <div class="credential-row">
+                            <span class="label">Called to the Nigerian Bar</span>
+                            <span class="value">2021</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">LLB</span>
+                            <span class="value">University of Benin</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">Member, NBA &amp; NBA Section on Business Law</span>
+                            <span class="value">Ongoing</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">Board Advisory, Health Technology Sector</span>
+                            <span class="value">Current</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
