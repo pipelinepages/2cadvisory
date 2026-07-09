@@ -310,7 +310,7 @@
         /* Practice areas */
         .practice-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1px;
             background: var(--card-border);
             border: 1px solid var(--card-border);
@@ -329,26 +329,79 @@
         .practice-card:hover {
             background: var(--bg-2);
         }
-        .practice-card .icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 9px;
-            background: var(--accent-soft);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .practice-card .number {
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--accent);
-            font-size: 17px;
+            letter-spacing: 0.02em;
         }
         .practice-card h3 {
-            font-size: 14.5px;
+            font-size: 20px;
             font-weight: 600;
-            line-height: 1.4;
+            line-height: 1.3;
+            font-family: 'Sora', sans-serif;
         }
         .practice-card p {
-            font-size: 12.5px;
-            color: var(--ink-2);
+            font-size: 14px;
+            color: var(--ink-1);
             margin: 0;
+            line-height: 1.5;
+        }
+
+        /* Approach Table (NEW) */
+        .approach {
+            background: var(--bg-0);
+            overflow: hidden;
+            position: relative;
+        }
+        .approach .section-head {
+            margin-bottom: 20px;
+        }
+        .approach-table {
+            display: grid;
+            grid-template-columns: 1.2fr 1.8fr 2fr;
+            gap: 0;
+        }
+        .approach-table .col-head {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-2);
+            padding: 24px 0 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .approach-table .col-head:first-child {
+            padding-left: 0;
+        }
+        .approach-table .row-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .approach-table .row-item:last-child {
+            border-bottom: none;
+        }
+        .approach-table .row-item.label {
+            color: var(--ink-1);
+            font-weight: 400;
+            font-size: 14.5px;
+        }
+        .approach-table .row-item.col-1 {
+            padding-left: 0;
+        }
+        .approach-table .row-item.col-2 {
+            border-left: 1px solid rgba(255,255,255,0.08);
+            color: var(--ink-1);
+            font-size: 14.5px;
+        }
+        .approach-table .row-item.col-3 {
+            border-left: 1px solid var(--accent);
+            color: var(--ink-0);
+            font-size: 14.5px;
+            padding-left: 18px;
         }
 
         /* AI assessment */
@@ -727,6 +780,32 @@
                 font-size: 40px;
             }
         }
+        
+        @media (max-width: 768px) {
+            .approach-table {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            .approach-table .col-head {
+                display: none;
+            }
+            .approach-table .row-item.label {
+                background: rgba(255,255,255,0.03);
+                padding-top: 24px;
+                border-top: 1px solid rgba(255,255,255,0.08);
+                font-weight: 600;
+            }
+            .approach-table .row-item.col-2,
+            .approach-table .row-item.col-3 {
+                border-left: none;
+                padding-left: 0;
+                font-size: 13.5px;
+            }
+            .approach-table .row-item.col-3 {
+                padding-bottom: 20px;
+            }
+        }
+        
         @media (max-width:680px) {
             .navlinks {
                 display: none;
@@ -833,24 +912,90 @@
         </div>
     </div>
 
+    <!-- Practice Areas Section -->
     <section id="services">
         <div class="wrap">
             <div class="section-head">
                 <div>
                     <span class="eyebrow">Practice areas</span>
-                    <h2 style="margin-top:12px;">Where the risk<br />For <span class="accent">actually sits.</span></h2>
+                    <h2 style="margin-top:12px;">Where the risk <span class="accent">actually sits.</span></h2>
                 </div>
                 <a href="#footer-resources" class="view-all">View All Services →</a>
             </div>
             <div class="practice-grid">
-                <div class="practice-card"><div class="icon">◈</div><h3>Startup &amp; Company Formation</h3><p>Incorporation, structuring, and governance from day one.</p></div>
-                <div class="practice-card"><div class="icon">▤</div><h3>Commercial &amp; Contract Advisory</h3><p>Agreements that protect your interests without slowing you down.</p></div>
-                <div class="practice-card"><div class="icon">◇</div><h3>Technology Law</h3><p>Guidance for software, platforms, and digital products.</p></div>
-                <div class="practice-card"><div class="icon">✦</div><h3>Intellectual Property &amp; Software Licensing</h3><p>Trademark, copyright, and patent protection, plus licensing agreements that govern how your software is used, resold, or embedded by others.</p></div>
-                <div class="practice-card"><div class="icon">◍</div><h3>Data Protection &amp; Privacy</h3><p>Compliance frameworks for how you collect and use data.</p></div>
-                <div class="practice-card"><div class="icon">⬡</div><h3>Employment &amp; HR Advisory</h3><p>Contracts, policies, and dispute resolution for growing teams.</p></div>
-                <div class="practice-card"><div class="icon">◎</div><h3>Corporate Governance</h3><p>Board structures and processes that scale with you.</p></div>
-                <div class="practice-card"><div class="icon">📈</div><h3>Investment &amp; Fundraising</h3><p>Deal structuring, due diligence, and investor-ready documentation.</p></div>
+                <div class="practice-card">
+                    <div class="number">01</div>
+                    <h3>Startup Law &amp; Corporate Structuring</h3>
+                    <p>Incorporation, founders' agreements, share structuring, and CAMA 2020-compliant governance documents from day one.</p>
+                </div>
+                <div class="practice-card">
+                    <div class="number">02</div>
+                    <h3>Tech, IP &amp; Digital Assets</h3>
+                    <p>IP assignment and protection, software licensing, and regulatory frameworks for crypto, fintech, and digital asset products.</p>
+                </div>
+                <div class="practice-card">
+                    <div class="number">03</div>
+                    <h3>Data Protection &amp; Compliance</h3>
+                    <p>NDPA 2023 audits, privacy policies, and data governance frameworks built to survive regulatory scrutiny, not just paperwork.</p>
+                </div>
+                <div class="practice-card">
+                    <div class="number">04</div>
+                    <h3>Commercial Contracts</h3>
+                    <p>Vendor agreements, service contracts, and dispute resolution clauses drafted under the Arbitration and Mediation Act 2023.</p>
+                </div>
+                <div class="practice-card">
+                    <div class="number">05</div>
+                    <h3>Investment Readiness</h3>
+                    <p>Due diligence prep, cap table clean-up, and investor-facing documentation — so funding conversations don't stall on legal gaps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW APPROACH SECTION -->
+    <section class="approach">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">The approach</span>
+                    <h2 style="margin-top:12px;">What changes when you work with us.</h2>
+                </div>
+            </div>
+            <div class="approach-table">
+                <!-- Headers -->
+                <div class="col-head"></div>
+                <div class="col-head">Traditional firms</div>
+                <div class="col-head">2C Legal Advisory</div>
+                
+                <!-- Row 1 -->
+                <div class="row-item label col-1">Response time</div>
+                <div class="row-item col-2">Days, routed through associates</div>
+                <div class="row-item col-3">Direct access to your lawyer, no hand-offs</div>
+
+                <!-- Row 2 -->
+                <div class="row-item label col-1">Pricing</div>
+                <div class="row-item col-2">Billed hourly, often opaque</div>
+                <div class="row-item col-3">No hourly billing — scoped around your stage and budget</div>
+
+                <!-- Row 3 -->
+                <div class="row-item label col-1">Language</div>
+                <div class="row-item col-2">Dense legal register</div>
+                <div class="row-item col-3">Plain terms your team can actually use</div>
+
+                <!-- Row 4 -->
+                <div class="row-item label col-1">Scope</div>
+                <div class="row-item col-2">Single-matter engagements</div>
+                <div class="row-item col-3">Full lifecycle — setup through funding</div>
+
+                <!-- Row 5 -->
+                <div class="row-item label col-1">Structure</div>
+                <div class="row-item col-2">Documentation that just satisfies compliance</div>
+                <div class="row-item col-3">Built to support scaling, not just tick a box</div>
+
+                <!-- Row 6 -->
+                <div class="row-item label col-1">Compliance posture</div>
+                <div class="row-item col-2">Reactive, filed when required</div>
+                <div class="row-item col-3">Built in from incorporation onward</div>
             </div>
         </div>
     </section>
