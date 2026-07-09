@@ -404,7 +404,7 @@
             padding-left: 18px;
         }
 
-        /* Founder Section (NEW) */
+        /* Founder Section */
         .founder {
             background: var(--bg-1);
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -472,6 +472,64 @@
         .credential-row .value {
             color: var(--ink-0);
             text-align: right;
+        }
+
+        /* Startup Blueprint Series (NEW) */
+        .blueprint {
+            background: var(--bg-0);
+        }
+        .blueprint-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start;
+        }
+        .blueprint-left h2 {
+            font-size: 38px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin: 16px 0 24px 0;
+        }
+        .blueprint-left p {
+            color: var(--ink-1);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+            max-width: 520px;
+        }
+        .blueprint-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .blueprint-actions .btn {
+            min-width: 140px;
+            justify-content: center;
+        }
+        .blueprint-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-top: 8px;
+        }
+        .blueprint-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            color: var(--ink-1);
+            font-size: 15px;
+        }
+        .blueprint-list li::before {
+            content: '';
+            display: block;
+            width: 14px;
+            height: 2px;
+            background: var(--accent);
+            margin-top: 10px;
+            flex-shrink: 0;
         }
 
         /* AI assessment */
@@ -836,7 +894,8 @@
             .practice-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .founder-grid {
+            .founder-grid,
+            .blueprint-grid {
                 grid-template-columns: 1fr;
                 gap: 32px;
             }
@@ -881,6 +940,13 @@
             }
             .approach-table .row-item.col-3 {
                 padding-bottom: 20px;
+            }
+            .blueprint-actions {
+                flex-direction: column;
+            }
+            .blueprint-actions .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
         
@@ -927,6 +993,9 @@
             }
             .credential-row .value {
                 text-align: left;
+            }
+            .blueprint-left h2 {
+                font-size: 32px;
             }
         }
     </style>
@@ -1088,7 +1157,7 @@
         </div>
     </section>
 
-    <!-- NEW FOUNDER SECTION -->
+    <!-- Founder Section -->
     <section class="founder">
         <div class="wrap">
             <div class="founder-grid">
@@ -1118,6 +1187,34 @@
                             <span class="value">Current</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW STARTUP BLUEPRINT SECTION -->
+    <section class="blueprint">
+        <div class="wrap">
+            <div class="section-head">
+                <div>
+                    <span class="eyebrow">The Startup Blueprint Series</span>
+                </div>
+            </div>
+            <div class="blueprint-grid">
+                <div class="blueprint-left">
+                    <h2>We're committed to educating the next generation of founders.</h2>
+                    <p>The Startup Blueprint Series is our video series on building scalable businesses in the tech industry — workspace reviews that walk through real company structures, and interviews with founders about what actually worked and what didn't. It's the same thinking behind our legal work, just made public: strategy that's specific, not generic.</p>
+                    <div class="blueprint-actions">
+                        <a href="#" class="btn btn-ghost">Watch on Instagram</a>
+                        <a href="#" class="btn btn-ghost">Watch on YouTube</a>
+                    </div>
+                </div>
+                <div class="blueprint-right">
+                    <ul class="blueprint-list">
+                        <li>Workspace reviews of real founder businesses</li>
+                        <li>Founder interviews on building and scaling</li>
+                        <li>New episodes released in seasonal batches</li>
+                    </ul>
                 </div>
             </div>
         </div>
