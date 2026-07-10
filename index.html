@@ -642,41 +642,42 @@
             border-radius: 1px;
         }
 
-        /* ── AI Assessment ─────────────── */
+        /* ── Legal Health Check ─────────── */
         .assess {
             background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            overflow: hidden;
         }
         .assess-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 0.82fr 1.18fr;
             gap: 48px;
             align-items: center;
         }
         .assess-copy h2 {
-            font-size: clamp(26px, 3.5vw, 34px);
+            font-size: clamp(26px, 3.5vw, 36px);
             font-weight: 700;
-            line-height: 1.25;
-            margin-bottom: 16px;
-            margin-top: 14px;
+            line-height: 1.22;
+            margin: 14px 0 16px;
         }
         .assess-copy p {
             color: var(--ink-1);
-            margin-bottom: 20px;
+            margin: 0 0 22px;
             font-size: 15px;
+            line-height: 1.7;
         }
         .checklist {
             list-style: none;
             padding: 0;
-            margin: 0 0 26px;
+            margin: 0 0 28px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 11px;
         }
         .checklist li {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
             font-size: 14.5px;
             color: var(--ink-0);
@@ -687,121 +688,98 @@
             border-radius: 50%;
             background: var(--accent-soft);
             color: var(--accent);
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             font-size: 11px;
             flex: none;
             font-weight: 700;
+            margin-top: 1px;
+        }
+        .assess-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
         }
         .fineprint {
             font-size: 12px;
             color: var(--ink-2);
-            margin-top: 12px;
+            margin-top: 13px;
         }
-
-        /* Score Card */
-        .score-card {
-            background: var(--card);
+        .tool-shell {
             border: 1px solid var(--card-border);
             border-radius: var(--radius);
-            padding: 28px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
+            background: var(--card);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+            overflow: hidden;
+            min-width: 0;
         }
-        .score-left {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            gap: 14px;
-            border-right: 1px solid var(--card-border);
-            padding-right: 22px;
-        }
-        .gauge-label {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink-2);
-        }
-        .gauge-wrap {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            flex-shrink: 0;
-        }
-        .gauge-wrap svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-        .gauge-num {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Sora', sans-serif;
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--ink-0);
-        }
-        .gauge-sub {
-            font-size: 12.5px;
-            color: var(--ink-1);
-            max-width: 170px;
-            line-height: 1.4;
-        }
-        .risk-list {
-            display: flex;
-            flex-direction: column;
-            gap: 13px;
-            justify-content: center;
-        }
-        .risk-list>div:first-child {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--ink-2);
-            margin-bottom: 2px;
-        }
-        .risk-row {
+        .tool-bar {
+            min-height: 48px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 13.5px;
-            gap: 8px;
+            gap: 12px;
+            background: #0c1728;
+            border-bottom: 1px solid var(--card-border);
         }
-        .risk-row .name {
-            color: var(--ink-1);
-        }
-        .pill {
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 10px;
-            border-radius: 99px;
-            white-space: nowrap;
+        .tool-dots {
+            display: flex;
+            gap: 6px;
             flex-shrink: 0;
         }
-        .pill.good {
-            background: rgba(52, 211, 153, 0.14);
-            color: var(--accent-2);
+        .tool-dots span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ink-2);
+            opacity: .55;
         }
-        .pill.medium {
-            background: rgba(240, 184, 79, 0.14);
-            color: var(--amber);
-        }
-        .pill.low {
-            background: rgba(240, 120, 79, 0.14);
-            color: #f0a15f;
-        }
-        .score-card .cta-row {
-            grid-column: 1/-1;
+        .tool-address {
+            min-width: 0;
+            flex: 1;
+            max-width: 380px;
+            padding: 6px 12px;
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 6px;
+            color: var(--ink-2);
+            font-size: 11px;
             text-align: center;
-            padding-top: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .tool-open {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .tool-open:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+        .tool-frame-wrap {
+            height: 680px;
+            background: #eef5f5;
+            position: relative;
+        }
+        .tool-frame {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            display: block;
+            background: #eef5f5;
+        }
+        .tool-note {
+            padding: 10px 14px;
+            color: var(--ink-2);
+            font-size: 11px;
+            line-height: 1.45;
             border-top: 1px solid var(--card-border);
+            background: rgba(7, 15, 28, .72);
         }
 
         /* ── About ─────────────────────── */
@@ -1047,7 +1025,11 @@
                 gap: 16px;
             }
             .assess-grid {
+                grid-template-columns: 1fr;
                 gap: 36px;
+            }
+            .tool-frame-wrap {
+                height: 650px;
             }
             .about-grid {
                 grid-template-columns: 1fr;
@@ -1118,6 +1100,18 @@
                 max-width: 380px;
                 right: -120px;
                 opacity: 0.25;
+            }
+            .assess-actions .btn {
+                width: 100%;
+            }
+            .tool-bar {
+                padding: 9px 10px;
+            }
+            .tool-address {
+                text-align: left;
+            }
+            .tool-frame-wrap {
+                height: 720px;
             }
             .practice-grid {
                 grid-template-columns: 1fr;
@@ -1543,7 +1537,7 @@
             <div class="navlinks" id="navlinks">
                 <a href="#about">About</a>
                 <span class="has-caret">Services <span class="caret"></span></span>
-                <a href="#assessment">AI Legal Assessment</a>
+                <a href="#assessment">Legal Health Check</a>
                 <a href="#footer-resources">Resources</a>
                 <a href="#contact">Contact</a>
             </div>
@@ -1756,46 +1750,37 @@
         <div class="wrap">
             <div class="assess-grid">
                 <div class="assess-copy">
-                    <span class="eyebrow">AI Legal Assessment</span>
-                    <h2>Understand Your Legal Risks Before They Become Problems.</h2>
-                    <p>Our AI-powered assessment analyzes your startup across key legal areas and gives you a Legal Readiness Score with actionable recommendations.</p>
+                    <span class="eyebrow">Free Legal Health Check</span>
+                    <h2>Find the legal gaps that could slow down your startup.</h2>
+                    <p>Answer a guided set of questions about your company, contracts, data practices, team, intellectual property, and regulatory obligations. You will receive a personalised legal health score and a practical breakdown of what needs attention.</p>
                     <ul class="checklist">
-                        <li><span class="tick">✓</span> Company Structure</li>
-                        <li><span class="tick">✓</span> Contracts &amp; Agreements</li>
-                        <li><span class="tick">✓</span> Data Privacy &amp; Compliance</li>
-                        <li><span class="tick">✓</span> Employment Practices</li>
-                        <li><span class="tick">✓</span> IP Protection &amp; Software Licensing</li>
+                        <li><span class="tick">✓</span><span>Review your legal readiness across the areas investors, partners, and regulators care about.</span></li>
+                        <li><span class="tick">✓</span><span>See completed, in-progress, and missing safeguards in one clear report.</span></li>
+                        <li><span class="tick">✓</span><span>Get prioritised next steps you can discuss with the 2C Legal team.</span></li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Start Your Free Assessment →</a>
-                    <div class="fineprint">No sign up required · 3 minutes · No credit card needed</div>
+                    <div class="assess-actions">
+                        <a href="legal-health-check.html" class="btn btn-primary">Start the Free Health Check →</a>
+                        <a href="#contact" class="btn btn-ghost">Speak With a Lawyer</a>
+                    </div>
+                    <div class="fineprint">Free to use · Takes a few minutes · Your result is generated instantly</div>
                 </div>
-                <div class="score-card">
-                    <div class="score-left">
-                        <div class="gauge-label">Your Legal Readiness Score</div>
-                        <div class="gauge-wrap">
-                            <svg viewBox="0 0 150 150" width="150" height="150" aria-label="Gauge showing 76 out of 100">
-                                <circle cx="75" cy="75" r="62" fill="none" stroke="#1c2c44" stroke-width="12" />
-                                <circle id="gaugeArc" cx="75" cy="75" r="62" fill="none" stroke="url(#gaugeGrad)" stroke-width="12" stroke-linecap="round" stroke-dasharray="389.557" stroke-dashoffset="389.557" transform="rotate(-90 75 75)" />
-                                <defs>
-                                    <linearGradient id="gaugeGrad" x1="0" y1="0" x2="1" y2="1">
-                                        <stop offset="0%" stop-color="#5eead4" />
-                                        <stop offset="100%" stop-color="#34d399" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                            <div class="gauge-num">76</div>
-                        </div>
-                        <div class="gauge-sub">You're on the right track. Some areas need improvement.</div>
+
+                <div class="tool-shell" aria-label="2C Legal Health Check interactive tool">
+                    <div class="tool-bar">
+                        <div class="tool-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                        <div class="tool-address">2clegal.com/legal-health-check</div>
+                        <a class="tool-open" href="legal-health-check.html" target="_blank" rel="noopener">Open ↗</a>
                     </div>
-                    <div class="risk-list">
-                        <div>Risk Overview</div>
-                        <div class="risk-row"><span class="name">Company Structure</span><span class="pill good">Good</span></div>
-                        <div class="risk-row"><span class="name">Contracts</span><span class="pill medium">Fair</span></div>
-                        <div class="risk-row"><span class="name">Data Protection</span><span class="pill good">Good</span></div>
-                        <div class="risk-row"><span class="name">Employment</span><span class="pill low">Low</span></div>
-                        <div class="risk-row"><span class="name">IP &amp; Licensing</span><span class="pill medium">Fair</span></div>
+                    <div class="tool-frame-wrap">
+                        <iframe
+                            class="tool-frame"
+                            src="legal-health-check.html"
+                            title="Free Legal Health Check by 2C Legal Advisory"
+                            loading="lazy"
+                            referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
                     </div>
-                    <div class="cta-row"><a href="#contact" class="btn btn-ghost btn-sm">View Full Report</a></div>
+                    <div class="tool-note">The health check provides general information and does not replace legal advice tailored to your circumstances.</div>
                 </div>
             </div>
         </div>
@@ -1850,7 +1835,7 @@
                     <ul>
                         <li><a href="#">Home</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="#assessment">AI Legal Assessment</a></li>
+                        <li><a href="#assessment">Legal Health Check</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -1952,52 +1937,6 @@
                     }
                 }, 150);
             });
-
-            // ── Animate gauge on load ──
-            function animateGauge() {
-                const arc = document.getElementById('gaugeArc');
-                if (!arc) return;
-                const r = 62;
-                const circumference = 2 * Math.PI * r;
-                const score = 76;
-                const targetOffset = circumference - (score / 100) * circumference;
-
-                // Ensure initial state
-                arc.style.strokeDasharray = circumference;
-                arc.style.strokeDashoffset = circumference;
-
-                // Trigger animation
-                requestAnimationFrame(function() {
-                    requestAnimationFrame(function() {
-                        arc.style.transition =
-                            'stroke-dashoffset 1.4s cubic-bezier(0.22, 0.61, 0.36, 1)';
-                        arc.style.strokeDashoffset = targetOffset;
-                    });
-                });
-            }
-
-            // Run on load
-            if (document.readyState === 'loading') {
-                window.addEventListener('load', animateGauge);
-            } else {
-                animateGauge();
-            }
-
-            // Also animate when the assessment section scrolls into view
-            const assessSection = document.getElementById('assessment');
-            if (assessSection && 'IntersectionObserver' in window) {
-                let gaugeAnimated = false;
-                const observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting && !gaugeAnimated) {
-                            gaugeAnimated = true;
-                            animateGauge();
-                            observer.unobserve(assessSection);
-                        }
-                    });
-                }, { threshold: 0.3 });
-                observer.observe(assessSection);
-            }
         })();
     </script>
 
