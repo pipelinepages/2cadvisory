@@ -721,6 +721,51 @@
             text-underline-offset: 3px;
         }
 
+        .articles-loading,
+        .articles-fallback {
+            grid-column: 1 / -1;
+            min-height: 128px;
+            border: 1px dashed var(--card-border);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 24px;
+            color: var(--ink-2);
+            font-size: 14px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.015);
+        }
+        .articles-fallback {
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .articles-fallback a {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .loading-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 0 rgba(94, 234, 212, .5);
+            animation: articlePulse 1.4s infinite;
+            flex: none;
+        }
+        @keyframes articlePulse {
+            0% { box-shadow: 0 0 0 0 rgba(94, 234, 212, .45); }
+            70% { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0); }
+        }
+        .article-card.is-blog-post h3 a:focus-visible,
+        .article-card.is-blog-post .read-more:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 2px;
+        }
+
         /* ── Legal Health Check ─────────── */
         .assess {
             background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
@@ -1842,39 +1887,28 @@
                 <div>
                     <span class="eyebrow">Insights</span>
                     <h2 style="margin-top:12px;">Articles &amp; <span class="accent">Resources</span></h2>
-                    <p class="sub">Practical legal guidance for founders, operators, and investors.</p>
+                    <p class="sub">Practical legal guidance for founders, operators, and investors — pulled directly from Playbook by Miss B.</p>
                 </div>
-                <a href="#" class="view-all">View All →</a>
+                <a href="https://playbookbymissb.blogspot.com/" class="view-all" target="_blank" rel="noopener noreferrer">View All →</a>
             </div>
-            <div class="articles-grid">
-                <article class="article-card">
-                    <div class="article-category">Startup Law</div>
-                    <h3><a href="#">5 Common Legal Mistakes in Startup Incorporation</a></h3>
-                    <p>From choosing the wrong structure to missing key filings, here's what founders often get wrong — and how to avoid it.</p>
-                    <div class="article-meta">
-                        <span class="date">April 12, 2026</span>
-                        <a href="#" class="read-more">Read more →</a>
-                    </div>
-                </article>
-                <article class="article-card">
-                    <div class="article-category">Contracts</div>
-                    <h3><a href="#">What Every Founder's Agreement Must Include</a></h3>
-                    <p>Equity splits, vesting, IP ownership, and decision‑making — the clauses that prevent founder disputes before they start.</p>
-                    <div class="article-meta">
-                        <span class="date">March 28, 2026</span>
-                        <a href="#" class="read-more">Read more →</a>
-                    </div>
-                </article>
-                <article class="article-card">
-                    <div class="article-category">Data Privacy</div>
-                    <h3><a href="#">Data Privacy Compliance for Nigerian Startups</a></h3>
-                    <p>A plain‑English guide to NDPA 2023: what applies, what doesn't, and what you need to do now to stay compliant.</p>
-                    <div class="article-meta">
-                        <span class="date">March 15, 2026</span>
-                        <a href="#" class="read-more">Read more →</a>
-                    </div>
-                </article>
+
+            <!--
+                Latest Blogger posts are inserted here by the JSONP loader near the
+                bottom of this file. JSONP is used so this static page can read the
+                public Blogger feed without requiring a server-side proxy or API key.
+            -->
+            <div class="articles-grid" id="articlesGrid" aria-live="polite" aria-busy="true">
+                <div class="articles-loading" id="articlesLoading">
+                    <span class="loading-dot" aria-hidden="true"></span>
+                    Loading latest articles…
+                </div>
             </div>
+            <noscript>
+                <div class="articles-fallback">
+                    JavaScript is required to display the latest articles here.
+                    <a href="https://playbookbymissb.blogspot.com/" target="_blank" rel="noopener noreferrer">Read them on Playbook by Miss B →</a>
+                </div>
+            </noscript>
         </div>
     </section>
 
@@ -2068,6 +2102,158 @@
                     }
                 }, 150);
             });
+        })();
+
+        /* ═══════════ BLOGGER ARTICLE INTEGRATION ═══════════
+           Blogger supports JSON-in-script (JSONP), which is useful for a static
+           HTML site because it avoids cross-origin fetch restrictions.
+        */
+        (function() {
+            const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
+            const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
+            const grid = document.getElementById('articlesGrid');
+            let completed = false;
+
+            function stripHtml(html) {
+                const temp = document.createElement('div');
+                temp.innerHTML = html || '';
+                return (temp.textContent || temp.innerText || '')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+
+            function truncate(text, maxLength) {
+                if (!text || text.length <= maxLength) return text || '';
+                const shortened = text.slice(0, maxLength + 1);
+                const lastSpace = shortened.lastIndexOf(' ');
+                return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
+            }
+
+            function formatDate(value) {
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) return '';
+                return new Intl.DateTimeFormat('en-NG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }).format(date);
+            }
+
+            function getPostUrl(entry) {
+                const links = Array.isArray(entry.link) ? entry.link : [];
+                const alternate = links.find(function(link) {
+                    return link.rel === 'alternate' && link.href;
+                });
+                return alternate ? alternate.href : BLOG_URL;
+            }
+
+            function getCategory(entry) {
+                const categories = Array.isArray(entry.category) ? entry.category : [];
+                return categories.length && categories[0].term ? categories[0].term : 'Insights';
+            }
+
+            function makeArticleCard(entry) {
+                const url = getPostUrl(entry);
+                const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
+                const rawBody = entry.summary && entry.summary.$t
+                    ? entry.summary.$t
+                    : (entry.content && entry.content.$t ? entry.content.$t : '');
+                const excerpt = truncate(stripHtml(rawBody), 185);
+                const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
+                const category = getCategory(entry);
+
+                const article = document.createElement('article');
+                article.className = 'article-card is-blog-post';
+
+                const categoryEl = document.createElement('div');
+                categoryEl.className = 'article-category';
+                categoryEl.textContent = category;
+
+                const heading = document.createElement('h3');
+                const titleLink = document.createElement('a');
+                titleLink.href = url;
+                titleLink.target = '_blank';
+                titleLink.rel = 'noopener noreferrer';
+                titleLink.textContent = title;
+                heading.appendChild(titleLink);
+
+                const excerptEl = document.createElement('p');
+                excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
+
+                const meta = document.createElement('div');
+                meta.className = 'article-meta';
+
+                const dateEl = document.createElement('span');
+                dateEl.className = 'date';
+                dateEl.textContent = date;
+
+                const readMore = document.createElement('a');
+                readMore.className = 'read-more';
+                readMore.href = url;
+                readMore.target = '_blank';
+                readMore.rel = 'noopener noreferrer';
+                readMore.textContent = 'Read more →';
+
+                meta.appendChild(dateEl);
+                meta.appendChild(readMore);
+                article.appendChild(categoryEl);
+                article.appendChild(heading);
+                article.appendChild(excerptEl);
+                article.appendChild(meta);
+
+                return article;
+            }
+
+            function showFeedError() {
+                if (completed || !grid) return;
+                completed = true;
+                grid.setAttribute('aria-busy', 'false');
+                grid.innerHTML = '';
+
+                const fallback = document.createElement('div');
+                fallback.className = 'articles-fallback';
+                fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
+
+                const link = document.createElement('a');
+                link.href = BLOG_URL;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Read them on Playbook by Miss B →';
+                fallback.appendChild(link);
+                grid.appendChild(fallback);
+            }
+
+            // The callback name is intentionally global because Blogger JSONP calls it directly.
+            window.renderBloggerArticles = function(data) {
+                if (!grid) return;
+                const entries = data && data.feed && Array.isArray(data.feed.entry)
+                    ? data.feed.entry
+                    : [];
+
+                if (!entries.length) {
+                    showFeedError();
+                    return;
+                }
+
+                completed = true;
+                grid.innerHTML = '';
+                grid.setAttribute('aria-busy', 'false');
+
+                entries.slice(0, 6).forEach(function(entry) {
+                    grid.appendChild(makeArticleCard(entry));
+                });
+            };
+
+            if (!grid) return;
+
+            const feedScript = document.createElement('script');
+            feedScript.src = FEED_URL;
+            feedScript.async = true;
+            feedScript.onerror = showFeedError;
+            document.body.appendChild(feedScript);
+
+            // Provide a graceful fallback if Blogger is unreachable or blocked.
+            window.setTimeout(showFeedError, 9000);
         })();
     </script>
 
