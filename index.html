@@ -522,21 +522,23 @@
             gap: 48px;
             align-items: start;
         }
-        .founder-img-placeholder {
+        .founder-img-wrap {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--card-border);
             border-radius: var(--radius);
+            overflow: hidden;
             aspect-ratio: 3 / 4;
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--ink-2);
-            font-size: 14px;
-            text-align: center;
-            padding: 20px;
-            min-height: 360px;
-            position: sticky;
-            top: calc(var(--nav-height) + 24px);
+        }
+        .founder-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .founder-content {
             padding-top: 4px;
@@ -755,9 +757,15 @@
             flex: none;
         }
         @keyframes articlePulse {
-            0% { box-shadow: 0 0 0 0 rgba(94, 234, 212, .45); }
-            70% { box-shadow: 0 0 0 8px rgba(94, 234, 212, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(94, 234, 212, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(94, 234, 212, .45);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(94, 234, 212, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(94, 234, 212, 0);
+            }
         }
         .article-card.is-blog-post h3 a:focus-visible,
         .article-card.is-blog-post .read-more:focus-visible {
@@ -866,7 +874,7 @@
             flex: 1;
             max-width: 380px;
             padding: 6px 12px;
-            border: 1px solid rgba(255,255,255,.07);
+            border: 1px solid rgba(255, 255, 255, .07);
             border-radius: 6px;
             color: var(--ink-2);
             font-size: 11px;
@@ -1131,10 +1139,10 @@
                 grid-template-columns: 1fr 1.2fr;
                 gap: 36px;
             }
-            .founder-img-placeholder {
+            .founder-img-wrap {
                 position: static;
-                min-height: 300px;
                 aspect-ratio: 3 / 4;
+                min-height: 300px;
             }
             .founder-content blockquote {
                 font-size: clamp(18px, 2.4vw, 22px);
@@ -1303,7 +1311,7 @@
                 grid-template-columns: 1fr;
                 gap: 28px;
             }
-            .founder-img-placeholder {
+            .founder-img-wrap {
                 aspect-ratio: 16 / 9;
                 min-height: 220px;
                 position: static;
@@ -1454,7 +1462,7 @@
             .practice-card p {
                 font-size: 13px;
             }
-            .founder-img-placeholder {
+            .founder-img-wrap {
                 aspect-ratio: 4 / 3;
                 min-height: 180px;
             }
@@ -1553,7 +1561,7 @@
             .practice-card h3 {
                 font-size: 16px;
             }
-            .founder-img-placeholder {
+            .founder-img-wrap {
                 aspect-ratio: 3 / 2;
                 min-height: 160px;
                 border-radius: 10px;
@@ -1822,8 +1830,8 @@
     <section class="founder">
         <div class="wrap">
             <div class="founder-grid">
-                <div class="founder-img-placeholder">
-                    Founder photo<br />to be added
+                <div class="founder-img-wrap">
+                    <img src="founder.jpg" alt="Comforter Bolere Ketebu (CBK) — Founder &amp; Principal, 2C Legal Advisory" />
                 </div>
                 <div class="founder-content">
                     <span class="eyebrow">Founder &amp; Principal</span>
@@ -1940,322 +1948,322 @@
                     </div>
                     <div class="tool-frame-wrap">
                         <iframe
-                            class="tool-frame"
-                            src="legal-health-check.html"
-                            title="Free Legal Health Check by 2C Legal Advisory"
-                            loading="lazy"
-                            referrerpolicy="strict-origin-when-cross-origin">
-                        </iframe>
-                    </div>
-                    <div class="tool-note">The health check provides general information and does not replace legal advice tailored to your circumstances.</div>
+                        class="tool-frame"
+                        src="legal-health-check.html"
+                        title="Free Legal Health Check by 2C Legal Advisory"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin">
+                    </iframe>
                 </div>
+                <div class="tool-note">The health check provides general information and does not replace legal advice tailored to your circumstances.</div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ═══════════ ABOUT ═══════════ -->
-    <section class="about" id="about">
-        <div class="wrap">
-            <div class="about-grid">
-                <div class="about-copy">
-                    <span class="eyebrow">About 2C Legal</span>
-                    <h2>Built for founders who move fast — and still need to get it right.</h2>
-                    <p>2C Legal was started because too many founders were learning legal lessons the expensive way: after a bad contract, a missed compliance step, or a dispute over who actually owns the code. We work as an embedded legal partner for startups and technology companies, translating dense legal requirements into clear decisions you can act on.</p>
-                    <p>Our team combines traditional corporate and commercial law with deep familiarity in technology, data, and intellectual property — including trademark and patent protection, and the software licensing agreements that determine how your product can be sold, white-labeled, or integrated by others. We pair that expertise with our AI Legal Assessment tool, so every engagement starts with a clear picture of where you stand.</p>
-                    <div class="about-values">
-                        <div class="about-value"><span class="dot"></span><div><h4>Built for builders</h4><p>We speak the language of product and engineering teams, not just legal departments.</p></div></div>
-                        <div class="about-value"><span class="dot"></span><div><h4>Protection first</h4><p>From IP management to data privacy, we close gaps before they become liabilities.</p></div></div>
-                        <div class="about-value"><span class="dot"></span><div><h4>Investment-ready</h4><p>We prepare the documentation and structure that due diligence actually looks for.</p></div></div>
-                    </div>
+<!-- ═══════════ ABOUT ═══════════ -->
+<section class="about" id="about">
+    <div class="wrap">
+        <div class="about-grid">
+            <div class="about-copy">
+                <span class="eyebrow">About 2C Legal</span>
+                <h2>Built for founders who move fast — and still need to get it right.</h2>
+                <p>2C Legal was started because too many founders were learning legal lessons the expensive way: after a bad contract, a missed compliance step, or a dispute over who actually owns the code. We work as an embedded legal partner for startups and technology companies, translating dense legal requirements into clear decisions you can act on.</p>
+                <p>Our team combines traditional corporate and commercial law with deep familiarity in technology, data, and intellectual property — including trademark and patent protection, and the software licensing agreements that determine how your product can be sold, white-labeled, or integrated by others. We pair that expertise with our AI Legal Assessment tool, so every engagement starts with a clear picture of where you stand.</p>
+                <div class="about-values">
+                    <div class="about-value"><span class="dot"></span><div><h4>Built for builders</h4><p>We speak the language of product and engineering teams, not just legal departments.</p></div></div>
+                    <div class="about-value"><span class="dot"></span><div><h4>Protection first</h4><p>From IP management to data privacy, we close gaps before they become liabilities.</p></div></div>
+                    <div class="about-value"><span class="dot"></span><div><h4>Investment-ready</h4><p>We prepare the documentation and structure that due diligence actually looks for.</p></div></div>
                 </div>
-                <div class="stat-grid">
-                    <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Startups &amp; companies advised</div></div>
-                    <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Contracts &amp; licenses drafted</div></div>
-                    <div class="stat-card"><div class="stat-num">₦2.4B+</div><div class="stat-label">Funding rounds supported</div></div>
-                    <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Industries served</div></div>
-                </div>
+            </div>
+            <div class="stat-grid">
+                <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Startups &amp; companies advised</div></div>
+                <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Contracts &amp; licenses drafted</div></div>
+                <div class="stat-card"><div class="stat-num">₦2.4B+</div><div class="stat-label">Funding rounds supported</div></div>
+                <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Industries served</div></div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- ═══════════ CTA BAND ═══════════ -->
-    <section id="contact">
-        <div class="cta-band">
-            <div>
-                <h2>Tell us what you're building.</h2>
-                <p>Most engagements start with a short call to understand the company and the gap. No obligation, no jargon.</p>
-            </div>
-            <a href="#" class="btn btn-primary">Book a Strategy Call</a>
+<!-- ═══════════ CTA BAND ═══════════ -->
+<section id="contact">
+    <div class="cta-band">
+        <div>
+            <h2>Tell us what you're building.</h2>
+            <p>Most engagements start with a short call to understand the company and the gap. No obligation, no jargon.</p>
         </div>
-    </section>
+        <a href="#" class="btn btn-primary">Book a Strategy Call</a>
+    </div>
+</section>
 
-    <!-- ═══════════ FOOTER ═══════════ -->
-    <footer id="footer-resources">
-        <div class="wrap">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
-                    <p>A technology-driven law firm helping startups build robust legal foundations, protect IP and software, and scale with confidence.</p>
-                </div>
-                <div class="footer-col">
-                    <h5>Quick Links</h5>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Practice Areas</h5>
-                    <ul>
-                        <li><a href="#services">Technology Law</a></li>
-                        <li><a href="#services">IP &amp; Software Licensing</a></li>
-                        <li><a href="#services">All Services</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Resources</h5>
-                    <ul>
-                        <li><a href="legal-health-check.html">Legal Health Check</a></li>
-                        <li><a href="#footer-resources">Startup Blueprint Series</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h5>Contact Us</h5>
-                    <ul>
-                        <li><a href="mailto:hello@2clegal.com">hello@2clegal.com</a></li>
-                        <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
-                    </ul>
-                </div>
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer id="footer-resources">
+    <div class="wrap">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
+                <p>A technology-driven law firm helping startups build robust legal foundations, protect IP and software, and scale with confidence.</p>
             </div>
-            <div class="footer-bottom">
-                <div>© 2026 2C Legal. All rights reserved.</div>
-                <div class="socials">
-                    <a href="#" aria-label="X (Twitter)">𝕏</a>
-                    <a href="#" aria-label="LinkedIn">in</a>
-                    <a href="#" aria-label="Instagram">◎</a>
-                </div>
+            <div class="footer-col">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Practice Areas</h5>
+                <ul>
+                    <li><a href="#services">Technology Law</a></li>
+                    <li><a href="#services">IP &amp; Software Licensing</a></li>
+                    <li><a href="#services">All Services</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Resources</h5>
+                <ul>
+                    <li><a href="legal-health-check.html">Legal Health Check</a></li>
+                    <li><a href="#footer-resources">Startup Blueprint Series</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>Contact Us</h5>
+                <ul>
+                    <li><a href="mailto:hello@2clegal.com">hello@2clegal.com</a></li>
+                    <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
+        <div class="footer-bottom">
+            <div>© 2026 2C Legal. All rights reserved.</div>
+            <div class="socials">
+                <a href="#" aria-label="X (Twitter)">𝕏</a>
+                <a href="#" aria-label="LinkedIn">in</a>
+                <a href="#" aria-label="Instagram">◎</a>
+            </div>
+        </div>
+    </div>
+</footer>
 
-    <script>
-        (function() {
-            const burger = document.getElementById('burger');
-            const navlinks = document.getElementById('navlinks');
-            const navOverlay = document.getElementById('navOverlay');
-            const navLinksAnchors = navlinks.querySelectorAll('a');
-            let menuOpen = false;
+<script>
+    (function() {
+        const burger = document.getElementById('burger');
+        const navlinks = document.getElementById('navlinks');
+        const navOverlay = document.getElementById('navOverlay');
+        const navLinksAnchors = navlinks.querySelectorAll('a');
+        let menuOpen = false;
 
-            function openMenu() {
-                menuOpen = true;
-                navlinks.classList.add('active');
-                burger.classList.add('active');
-                burger.setAttribute('aria-expanded', 'true');
-                navOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
+        function openMenu() {
+            menuOpen = true;
+            navlinks.classList.add('active');
+            burger.classList.add('active');
+            burger.setAttribute('aria-expanded', 'true');
+            navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            menuOpen = false;
+            navlinks.classList.remove('active');
+            burger.classList.remove('active');
+            burger.setAttribute('aria-expanded', 'false');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function toggleMenu() {
+            if (menuOpen) {
+                closeMenu();
+            } else {
+                openMenu();
             }
+        }
 
-            function closeMenu() {
-                menuOpen = false;
-                navlinks.classList.remove('active');
-                burger.classList.remove('active');
-                burger.setAttribute('aria-expanded', 'false');
-                navOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        burger.addEventListener('click', toggleMenu);
+        navOverlay.addEventListener('click', closeMenu);
 
-            function toggleMenu() {
+        // Close menu when a nav link is clicked
+        navLinksAnchors.forEach(function(link) {
+            link.addEventListener('click', function() {
                 if (menuOpen) {
                     closeMenu();
-                } else {
-                    openMenu();
                 }
-            }
-
-            burger.addEventListener('click', toggleMenu);
-            navOverlay.addEventListener('click', closeMenu);
-
-            // Close menu when a nav link is clicked
-            navLinksAnchors.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    if (menuOpen) {
-                        closeMenu();
-                    }
-                });
             });
+        });
 
-            // Close menu on Escape key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && menuOpen) {
+        // Close menu on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && menuOpen) {
+                closeMenu();
+                burger.focus();
+            }
+        });
+
+        // Reset menu state on window resize above mobile breakpoint
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function() {
+                if (window.innerWidth > 768 && menuOpen) {
                     closeMenu();
-                    burger.focus();
                 }
+            }, 150);
+        });
+    })();
+
+    /* ═══════════ BLOGGER ARTICLE INTEGRATION ═══════════
+       Blogger supports JSON-in-script (JSONP), which is useful for a static
+       HTML site because it avoids cross-origin fetch restrictions.
+    */
+    (function() {
+        const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
+        const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
+        const grid = document.getElementById('articlesGrid');
+        let completed = false;
+
+        function stripHtml(html) {
+            const temp = document.createElement('div');
+            temp.innerHTML = html || '';
+            return (temp.textContent || temp.innerText || '')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function truncate(text, maxLength) {
+            if (!text || text.length <= maxLength) return text || '';
+            const shortened = text.slice(0, maxLength + 1);
+            const lastSpace = shortened.lastIndexOf(' ');
+            return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
+        }
+
+        function formatDate(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return new Intl.DateTimeFormat('en-NG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            }).format(date);
+        }
+
+        function getPostUrl(entry) {
+            const links = Array.isArray(entry.link) ? entry.link : [];
+            const alternate = links.find(function(link) {
+                return link.rel === 'alternate' && link.href;
             });
+            return alternate ? alternate.href : BLOG_URL;
+        }
 
-            // Reset menu state on window resize above mobile breakpoint
-            let resizeTimer;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(function() {
-                    if (window.innerWidth > 768 && menuOpen) {
-                        closeMenu();
-                    }
-                }, 150);
-            });
-        })();
+        function getCategory(entry) {
+            const categories = Array.isArray(entry.category) ? entry.category : [];
+            return categories.length && categories[0].term ? categories[0].term : 'Insights';
+        }
 
-        /* ═══════════ BLOGGER ARTICLE INTEGRATION ═══════════
-           Blogger supports JSON-in-script (JSONP), which is useful for a static
-           HTML site because it avoids cross-origin fetch restrictions.
-        */
-        (function() {
-            const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
-            const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
-            const grid = document.getElementById('articlesGrid');
-            let completed = false;
+        function makeArticleCard(entry) {
+            const url = getPostUrl(entry);
+            const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
+            const rawBody = entry.summary && entry.summary.$t ?
+                entry.summary.$t :
+                (entry.content && entry.content.$t ? entry.content.$t : '');
+            const excerpt = truncate(stripHtml(rawBody), 185);
+            const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
+            const category = getCategory(entry);
 
-            function stripHtml(html) {
-                const temp = document.createElement('div');
-                temp.innerHTML = html || '';
-                return (temp.textContent || temp.innerText || '')
-                    .replace(/\s+/g, ' ')
-                    .trim();
-            }
+            const article = document.createElement('article');
+            article.className = 'article-card is-blog-post';
 
-            function truncate(text, maxLength) {
-                if (!text || text.length <= maxLength) return text || '';
-                const shortened = text.slice(0, maxLength + 1);
-                const lastSpace = shortened.lastIndexOf(' ');
-                return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
-            }
+            const categoryEl = document.createElement('div');
+            categoryEl.className = 'article-category';
+            categoryEl.textContent = category;
 
-            function formatDate(value) {
-                const date = new Date(value);
-                if (Number.isNaN(date.getTime())) return '';
-                return new Intl.DateTimeFormat('en-NG', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                }).format(date);
-            }
+            const heading = document.createElement('h3');
+            const titleLink = document.createElement('a');
+            titleLink.href = url;
+            titleLink.target = '_blank';
+            titleLink.rel = 'noopener noreferrer';
+            titleLink.textContent = title;
+            heading.appendChild(titleLink);
 
-            function getPostUrl(entry) {
-                const links = Array.isArray(entry.link) ? entry.link : [];
-                const alternate = links.find(function(link) {
-                    return link.rel === 'alternate' && link.href;
-                });
-                return alternate ? alternate.href : BLOG_URL;
-            }
+            const excerptEl = document.createElement('p');
+            excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
 
-            function getCategory(entry) {
-                const categories = Array.isArray(entry.category) ? entry.category : [];
-                return categories.length && categories[0].term ? categories[0].term : 'Insights';
-            }
+            const meta = document.createElement('div');
+            meta.className = 'article-meta';
 
-            function makeArticleCard(entry) {
-                const url = getPostUrl(entry);
-                const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
-                const rawBody = entry.summary && entry.summary.$t
-                    ? entry.summary.$t
-                    : (entry.content && entry.content.$t ? entry.content.$t : '');
-                const excerpt = truncate(stripHtml(rawBody), 185);
-                const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
-                const category = getCategory(entry);
+            const dateEl = document.createElement('span');
+            dateEl.className = 'date';
+            dateEl.textContent = date;
 
-                const article = document.createElement('article');
-                article.className = 'article-card is-blog-post';
+            const readMore = document.createElement('a');
+            readMore.className = 'read-more';
+            readMore.href = url;
+            readMore.target = '_blank';
+            readMore.rel = 'noopener noreferrer';
+            readMore.textContent = 'Read more →';
 
-                const categoryEl = document.createElement('div');
-                categoryEl.className = 'article-category';
-                categoryEl.textContent = category;
+            meta.appendChild(dateEl);
+            meta.appendChild(readMore);
+            article.appendChild(categoryEl);
+            article.appendChild(heading);
+            article.appendChild(excerptEl);
+            article.appendChild(meta);
 
-                const heading = document.createElement('h3');
-                const titleLink = document.createElement('a');
-                titleLink.href = url;
-                titleLink.target = '_blank';
-                titleLink.rel = 'noopener noreferrer';
-                titleLink.textContent = title;
-                heading.appendChild(titleLink);
+            return article;
+        }
 
-                const excerptEl = document.createElement('p');
-                excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
+        function showFeedError() {
+            if (completed || !grid) return;
+            completed = true;
+            grid.setAttribute('aria-busy', 'false');
+            grid.innerHTML = '';
 
-                const meta = document.createElement('div');
-                meta.className = 'article-meta';
+            const fallback = document.createElement('div');
+            fallback.className = 'articles-fallback';
+            fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
 
-                const dateEl = document.createElement('span');
-                dateEl.className = 'date';
-                dateEl.textContent = date;
+            const link = document.createElement('a');
+            link.href = BLOG_URL;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'Read them on Playbook by Miss B →';
+            fallback.appendChild(link);
+            grid.appendChild(fallback);
+        }
 
-                const readMore = document.createElement('a');
-                readMore.className = 'read-more';
-                readMore.href = url;
-                readMore.target = '_blank';
-                readMore.rel = 'noopener noreferrer';
-                readMore.textContent = 'Read more →';
-
-                meta.appendChild(dateEl);
-                meta.appendChild(readMore);
-                article.appendChild(categoryEl);
-                article.appendChild(heading);
-                article.appendChild(excerptEl);
-                article.appendChild(meta);
-
-                return article;
-            }
-
-            function showFeedError() {
-                if (completed || !grid) return;
-                completed = true;
-                grid.setAttribute('aria-busy', 'false');
-                grid.innerHTML = '';
-
-                const fallback = document.createElement('div');
-                fallback.className = 'articles-fallback';
-                fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
-
-                const link = document.createElement('a');
-                link.href = BLOG_URL;
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-                link.textContent = 'Read them on Playbook by Miss B →';
-                fallback.appendChild(link);
-                grid.appendChild(fallback);
-            }
-
-            // The callback name is intentionally global because Blogger JSONP calls it directly.
-            window.renderBloggerArticles = function(data) {
-                if (!grid) return;
-                const entries = data && data.feed && Array.isArray(data.feed.entry)
-                    ? data.feed.entry
-                    : [];
-
-                if (!entries.length) {
-                    showFeedError();
-                    return;
-                }
-
-                completed = true;
-                grid.innerHTML = '';
-                grid.setAttribute('aria-busy', 'false');
-
-                entries.slice(0, 6).forEach(function(entry) {
-                    grid.appendChild(makeArticleCard(entry));
-                });
-            };
-
+        // The callback name is intentionally global because Blogger JSONP calls it directly.
+        window.renderBloggerArticles = function(data) {
             if (!grid) return;
+            const entries = data && data.feed && Array.isArray(data.feed.entry) ?
+                data.feed.entry :
+                [];
 
-            const feedScript = document.createElement('script');
-            feedScript.src = FEED_URL;
-            feedScript.async = true;
-            feedScript.onerror = showFeedError;
-            document.body.appendChild(feedScript);
+            if (!entries.length) {
+                showFeedError();
+                return;
+            }
 
-            // Provide a graceful fallback if Blogger is unreachable or blocked.
-            window.setTimeout(showFeedError, 9000);
-        })();
-    </script>
+            completed = true;
+            grid.innerHTML = '';
+            grid.setAttribute('aria-busy', 'false');
+
+            entries.slice(0, 6).forEach(function(entry) {
+                grid.appendChild(makeArticleCard(entry));
+            });
+        };
+
+        if (!grid) return;
+
+        const feedScript = document.createElement('script');
+        feedScript.src = FEED_URL;
+        feedScript.async = true;
+        feedScript.onerror = showFeedError;
+        document.body.appendChild(feedScript);
+
+        // Provide a graceful fallback if Blogger is unreachable or blocked.
+        window.setTimeout(showFeedError, 9000);
+    })();
+</script>
 
 </body>
 </html>
