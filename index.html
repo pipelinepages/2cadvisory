@@ -201,8 +201,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            cursor: default;
+            cursor: pointer;
             white-space: nowrap;
+            position: relative;
         }
         .caret {
             width: 8px;
@@ -212,6 +213,40 @@
             transform: rotate(45deg);
             margin-top: -3px;
             flex-shrink: 0;
+            transition: transform .2s ease;
+        }
+        .has-caret.active .caret {
+            transform: rotate(225deg);
+            margin-top: 0px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: -12px;
+            background: var(--bg-1);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 10px 0;
+            min-width: 230px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+            flex-direction: column;
+            gap: 2px;
+        }
+        .has-caret.active .dropdown-menu {
+            display: flex;
+        }
+        .dropdown-menu a {
+            padding: 8px 20px;
+            font-size: 13.5px;
+            color: var(--ink-1);
+            transition: background .15s ease, color .15s ease;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .dropdown-menu a:hover {
+            background: var(--bg-2);
+            color: var(--accent);
         }
         .navactions {
             display: flex;
@@ -337,34 +372,6 @@
             flex-wrap: wrap;
         }
 
-        /* Trustbar */
-        .trustbar {
-            padding: 32px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            background: var(--bg-1);
-        }
-        .trustbar .label {
-            font-size: 11px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--ink-2);
-            margin-bottom: 16px;
-        }
-        .logos {
-            display: flex;
-            align-items: center;
-            gap: 36px;
-            flex-wrap: wrap;
-            color: var(--ink-1);
-            font-weight: 600;
-            font-size: 15px;
-            opacity: 0.8;
-        }
-        .logos span {
-            white-space: nowrap;
-        }
-
         /* ── Sections ──────────────────── */
         section {
             padding: 80px 0;
@@ -425,6 +432,7 @@
             gap: 12px;
             transition: background .2s ease;
             cursor: default;
+            scroll-margin-top: calc(var(--nav-height) + 24px);
         }
         .practice-card:hover {
             background: var(--bg-2);
@@ -561,16 +569,30 @@
             font-size: 14.5px;
             margin-bottom: 32px;
         }
-        .founder-bio {
+        .founder-credential-list {
             display: flex;
             flex-direction: column;
-            gap: 18px;
+            gap: 0;
+            width: 100%;
         }
-        .founder-bio p {
-            font-size: 15px;
-            line-height: 1.75;
+        .credential-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 14px;
+            gap: 12px;
+        }
+        .credential-row:first-child {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .credential-row .label {
             color: var(--ink-1);
-            margin: 0;
+            flex-shrink: 0;
+        }
+        .credential-row .value {
+            color: var(--ink-0);
+            text-align: right;
         }
 
         /* ── Blueprint ─────────────────── */
@@ -1310,8 +1332,13 @@
             .founder-content blockquote {
                 font-size: 20px;
             }
-            .founder-bio p {
-                font-size: 14.5px;
+            .credential-row {
+                flex-direction: column;
+                gap: 2px;
+                padding: 12px 0;
+            }
+            .credential-row .value {
+                text-align: left;
             }
             .blueprint-list {
                 grid-template-columns: 1fr;
@@ -1383,9 +1410,23 @@
                 margin-bottom: 28px;
                 gap: 12px;
             }
-            .logos {
-                gap: 24px;
-                font-size: 14px;
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border: none;
+                padding: 8px 0 0 16px;
+                background: transparent;
+                min-width: auto;
+            }
+            .dropdown-menu a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            .has-caret .dropdown-menu {
+                display: none;
+            }
+            .has-caret.active .dropdown-menu {
+                display: flex;
             }
         }
 
@@ -1427,17 +1468,6 @@
                 right: -140px;
                 opacity: 0.18;
             }
-            .trustbar {
-                padding: 24px 0;
-            }
-            .trustbar .label {
-                margin-bottom: 12px;
-                font-size: 10px;
-            }
-            .logos {
-                gap: 16px;
-                font-size: 13px;
-            }
             .practice-card {
                 padding: 20px 16px;
                 gap: 8px;
@@ -1458,9 +1488,6 @@
             }
             .founder-content blockquote {
                 font-size: 18px;
-            }
-            .founder-bio p {
-                font-size: 14px;
             }
             .blueprint-left h2 {
                 font-size: 24px;
@@ -1569,8 +1596,8 @@
             .founder-content .attribution {
                 font-size: 13px;
             }
-            .founder-bio p {
-                font-size: 13.5px;
+            .credential-row {
+                font-size: 13px;
             }
             .approach-table .row-item {
                 font-size: 13px;
@@ -1675,7 +1702,15 @@
             <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
             <div class="navlinks" id="navlinks">
                 <a href="#about">About</a>
-                <span class="has-caret">Services <span class="caret"></span></span>
+                <span class="has-caret" id="servicesDropdown">Services <span class="caret"></span>
+                    <div class="dropdown-menu">
+                        <a href="#card-startup" data-target="card-startup">Startup Law &amp; Corporate Structuring</a>
+                        <a href="#card-tech" data-target="card-tech">Tech, IP &amp; Digital Assets</a>
+                        <a href="#card-data" data-target="card-data">Data Protection &amp; Compliance</a>
+                        <a href="#card-contracts" data-target="card-contracts">Commercial Contracts</a>
+                        <a href="#card-investment" data-target="card-investment">Investment Readiness</a>
+                    </div>
+                </span>
                 <a href="#assessment">Legal Health Check</a>
                 <a href="#articles">Articles</a>
                 <a href="#contact">Contact</a>
@@ -1729,16 +1764,6 @@
         </div>
     </section>
 
-    <!-- ═══════════ TRUST BAR ═══════════ -->
-    <div class="trustbar">
-        <div class="wrap">
-            <div class="label">Trusted by innovative companies</div>
-            <div class="logos">
-                <span>budgIT</span><span>⌘ Kudi</span><span>⚡Shuttlers</span><span>BuuPass</span><span>ZIKOKO</span>
-            </div>
-        </div>
-    </div>
-
     <!-- ═══════════ PRACTICE AREAS ═══════════ -->
     <section id="services">
         <div class="wrap">
@@ -1750,27 +1775,27 @@
                 <a href="#footer-resources" class="view-all">View All Services →</a>
             </div>
             <div class="practice-grid">
-                <div class="practice-card">
+                <div class="practice-card" id="card-startup">
                     <div class="number">01</div>
                     <h3>Startup Law &amp; Corporate Structuring</h3>
                     <p>Incorporation, founders' agreements, share structuring, and CAMA 2020-compliant governance documents from day one.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-tech">
                     <div class="number">02</div>
                     <h3>Tech, IP &amp; Digital Assets</h3>
                     <p>IP assignment and protection, software licensing, and regulatory frameworks for crypto, fintech, and digital asset products.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-data">
                     <div class="number">03</div>
                     <h3>Data Protection &amp; Compliance</h3>
                     <p>NDPA 2023 audits, privacy policies, and data governance frameworks built to survive regulatory scrutiny, not just paperwork.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-contracts">
                     <div class="number">04</div>
                     <h3>Commercial Contracts</h3>
                     <p>Vendor agreements, service contracts, and dispute resolution clauses drafted under the Arbitration and Mediation Act 2023.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-investment">
                     <div class="number">05</div>
                     <h3>Investment Readiness</h3>
                     <p>Due diligence prep, cap table clean-up, and investor-facing documentation — so funding conversations don't stall on legal gaps.</p>
@@ -1833,10 +1858,23 @@
                     <span class="eyebrow">Founder &amp; Principal</span>
                     <blockquote>"Founders don't need more legal jargon. They need someone who tells them clearly what protects them and what doesn't."</blockquote>
                     <div class="attribution">Comforter Bolere Ketebu (CBK) — Founder &amp; Principal, 2C Legal Advisory</div>
-                    <div class="founder-bio">
-                        <p>Comforter Bolere Ketebu, Esq. is the Founder and Principal Counsel of 2C Legal Advisory (2CLA), a corporate, commercial, technology, and startup-focused law practice that helps founders, SMEs, and growth-stage businesses build legally sound and investment-ready companies.</p>
-                        <p>With experience advising startups, business owners, and emerging ventures across corporate governance, fundraising, commercial transactions, regulatory compliance, data protection, and technology law, Comforter is passionate about helping entrepreneurs identify legal risks before they become business problems.</p>
-                        <p>Beyond her legal practice, she is committed to making quality legal guidance more accessible to founders through legal education and founder-focused content. She is the creator of the Startup Blueprint Series, a YouTube platform where she shares practical legal and business insights to help entrepreneurs build sustainable, compliant, and scalable businesses. She is also exploring innovative ways to leverage AI to help founders identify legal gaps early and access affordable legal support.</p>
+                    <div class="founder-credential-list">
+                        <div class="credential-row">
+                            <span class="label">Called to the Nigerian Bar</span>
+                            <span class="value">2021</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">LLB</span>
+                            <span class="value">University of Benin</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">Member, NBA &amp; NBA Section on Business Law</span>
+                            <span class="value">Ongoing</span>
+                        </div>
+                        <div class="credential-row">
+                            <span class="label">Board Advisory, Health Technology Sector</span>
+                            <span class="value">Current</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2013,13 +2051,13 @@
             <div class="footer-col">
                 <h5>Contact Us</h5>
                 <ul>
-                    <li><a href="mailto:2c.legaladvisory@gmail.com">2c.legaladvisory@gmail.com</a></li>
+                    <li><a href="mailto:hello@2clegal.com">hello@2clegal.com</a></li>
                     <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <div>© 2026 2C Legal. All rights reserved.</div>
+            <div>© 2026 2C Legal Advisory. All rights reserved.</div>
             <div class="socials">
                 <a href="#" aria-label="X (Twitter)">𝕏</a>
                 <a href="#" aria-label="LinkedIn">in</a>
@@ -2092,6 +2130,99 @@
                     closeMenu();
                 }
             }, 150);
+        });
+    })();
+
+    /* ═══════════ SERVICES DROPDOWN ═══════════ */
+    (function() {
+        const dropdownTrigger = document.getElementById('servicesDropdown');
+        if (!dropdownTrigger) return;
+
+        let isOpen = false;
+        let closeTimeout = null;
+
+        function openDropdown() {
+            if (closeTimeout) {
+                clearTimeout(closeTimeout);
+                closeTimeout = null;
+            }
+            isOpen = true;
+            dropdownTrigger.classList.add('active');
+        }
+
+        function closeDropdown() {
+            if (closeTimeout) {
+                clearTimeout(closeTimeout);
+                closeTimeout = null;
+            }
+            isOpen = false;
+            dropdownTrigger.classList.remove('active');
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+
+        // Click on the trigger toggles the dropdown (for mobile & tap)
+        dropdownTrigger.addEventListener('click', toggleDropdown);
+
+        // Hover handling for desktop (opens on hover)
+        dropdownTrigger.addEventListener('mouseenter', function(e) {
+            if (window.innerWidth > 768) {
+                openDropdown();
+            }
+        });
+
+        dropdownTrigger.addEventListener('mouseleave', function(e) {
+            if (window.innerWidth > 768) {
+                closeTimeout = setTimeout(closeDropdown, 250);
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (isOpen && !dropdownTrigger.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Handle dropdown item clicks: smooth scroll to the corresponding practice card
+        const dropdownLinks = dropdownTrigger.querySelectorAll('.dropdown-menu a');
+        dropdownLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                if (targetId) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 72;
+                        const extraOffset = 24;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                // Close dropdown after clicking an item (especially on mobile)
+                closeDropdown();
+                // Also close mobile menu if open
+                const navlinks = document.getElementById('navlinks');
+                if (navlinks && navlinks.classList.contains('active')) {
+                    const burger = document.getElementById('burger');
+                    const navOverlay = document.getElementById('navOverlay');
+                    navlinks.classList.remove('active');
+                    burger.classList.remove('active');
+                    burger.setAttribute('aria-expanded', 'false');
+                    navOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
         });
     })();
 
