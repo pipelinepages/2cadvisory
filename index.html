@@ -201,57 +201,6 @@
         .navlinks a:hover {
             color: var(--ink-0);
         }
-        .navlinks .has-caret {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            white-space: nowrap;
-            position: relative;
-        }
-        .caret {
-            width: 8px;
-            height: 8px;
-            border-right: 1.5px solid currentColor;
-            border-bottom: 1.5px solid currentColor;
-            transform: rotate(45deg);
-            margin-top: -3px;
-            flex-shrink: 0;
-            transition: transform .2s ease;
-        }
-        .has-caret.active .caret {
-            transform: rotate(225deg);
-            margin-top: 0px;
-        }
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: calc(100% + 8px);
-            left: -12px;
-            background: var(--bg-1);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius);
-            padding: 10px 0;
-            min-width: 230px;
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
-            flex-direction: column;
-            gap: 2px;
-        }
-        .has-caret.active .dropdown-menu {
-            display: flex;
-        }
-        .dropdown-menu a {
-            padding: 8px 20px;
-            font-size: 13.5px;
-            color: var(--ink-1);
-            transition: background .15s ease, color .15s ease;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-        .dropdown-menu a:hover {
-            background: var(--bg-2);
-            color: var(--accent);
-        }
         .navactions {
             display: flex;
             align-items: center;
@@ -1562,24 +1511,6 @@
                 margin-bottom: 28px;
                 gap: 12px;
             }
-            .dropdown-menu {
-                position: static;
-                box-shadow: none;
-                border: none;
-                padding: 8px 0 0 16px;
-                background: transparent;
-                min-width: auto;
-            }
-            .dropdown-menu a {
-                padding: 6px 12px;
-                font-size: 13px;
-            }
-            .has-caret .dropdown-menu {
-                display: none;
-            }
-            .has-caret.active .dropdown-menu {
-                display: flex;
-            }
             .modal-overlay {
                 padding: 16px;
                 align-items: flex-end;
@@ -1916,15 +1847,7 @@
             <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
             <div class="navlinks" id="navlinks">
                 <a href="#about">About</a>
-                <span class="has-caret" id="servicesDropdown">Services <span class="caret"></span>
-                    <div class="dropdown-menu">
-                        <a href="#card-startup" data-target="card-startup">Startup Law &amp; Corporate Structuring</a>
-                        <a href="#card-tech" data-target="card-tech">Tech, IP &amp; Digital Assets</a>
-                        <a href="#card-data" data-target="card-data">Data Protection &amp; Compliance</a>
-                        <a href="#card-contracts" data-target="card-contracts">Commercial Contracts</a>
-                        <a href="#card-investment" data-target="card-investment">Investment Readiness</a>
-                    </div>
-                </span>
+                <a href="#services">Services</a>
                 <a href="#assessment">Legal Health Check</a>
                 <a href="#articles">Articles</a>
                 <a href="#contact">Contact</a>
@@ -2372,93 +2295,6 @@
         });
     })();
 
-    /* ═══════════ SERVICES DROPDOWN ═══════════ */
-    (function() {
-        const dropdownTrigger = document.getElementById('servicesDropdown');
-        if (!dropdownTrigger) return;
-
-        let isOpen = false;
-        let closeTimeout = null;
-
-        function openDropdown() {
-            if (closeTimeout) {
-                clearTimeout(closeTimeout);
-                closeTimeout = null;
-            }
-            isOpen = true;
-            dropdownTrigger.classList.add('active');
-        }
-
-        function closeDropdown() {
-            if (closeTimeout) {
-                clearTimeout(closeTimeout);
-                closeTimeout = null;
-            }
-            isOpen = false;
-            dropdownTrigger.classList.remove('active');
-        }
-
-        function toggleDropdown(e) {
-            e.stopPropagation();
-            if (isOpen) {
-                closeDropdown();
-            } else {
-                openDropdown();
-            }
-        }
-
-        dropdownTrigger.addEventListener('click', toggleDropdown);
-
-        dropdownTrigger.addEventListener('mouseenter', function(e) {
-            if (window.innerWidth > 768) {
-                openDropdown();
-            }
-        });
-
-        dropdownTrigger.addEventListener('mouseleave', function(e) {
-            if (window.innerWidth > 768) {
-                closeTimeout = setTimeout(closeDropdown, 250);
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (isOpen && !dropdownTrigger.contains(e.target)) {
-                closeDropdown();
-            }
-        });
-
-        const dropdownLinks = dropdownTrigger.querySelectorAll('.dropdown-menu a');
-        dropdownLinks.forEach(function(link) {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('data-target');
-                if (targetId) {
-                    const targetElement = document.getElementById(targetId);
-                    if (targetElement) {
-                        const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 72;
-                        const extraOffset = 24;
-                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-                closeDropdown();
-                const navlinks = document.getElementById('navlinks');
-                if (navlinks && navlinks.classList.contains('active')) {
-                    const burger = document.getElementById('burger');
-                    const navOverlay = document.getElementById('navOverlay');
-                    navlinks.classList.remove('active');
-                    burger.classList.remove('active');
-                    burger.setAttribute('aria-expanded', 'false');
-                    navOverlay.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
-            });
-        });
-    })();
-
     /* ═══════════ BLOGGER ARTICLE INTEGRATION ═══════════ */
     (function() {
         const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
@@ -2637,13 +2473,11 @@
             firstFocusable = focusableElements[0] || null;
             lastFocusable = focusableElements[focusableElements.length - 1] || null;
 
-            // Focus the first input after a short delay
             setTimeout(function() {
                 const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
                 if (firstInput) firstInput.focus();
             }, 100);
 
-            // Restore scroll position of body
             document.documentElement.style.overflow = 'hidden';
         }
 
@@ -2653,12 +2487,10 @@
             modal.classList.remove('active');
             document.body.classList.remove('modal-open');
             document.documentElement.style.overflow = '';
-            // Return focus to the trigger that opened the modal
             const lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
             if (lastTrigger) lastTrigger.focus();
         }
 
-        // Open on trigger click
         triggers.forEach(function(trigger) {
             trigger.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2666,24 +2498,20 @@
             });
         });
 
-        // Close on close button
         closeBtn.addEventListener('click', closeModal);
 
-        // Close on overlay click (click outside the box)
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
                 closeModal();
             }
         });
 
-        // Close on Escape
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && isOpen) {
                 closeModal();
             }
         });
 
-        // Trap focus inside modal
         modal.addEventListener('keydown', function(e) {
             if (e.key !== 'Tab') return;
             if (!focusableElements.length) return;
@@ -2701,8 +2529,6 @@
             }
         });
 
-        // Update focusable elements when modal content changes (rare)
-        // Re-run on form submission or dynamic changes
         const observer = new MutationObserver(function() {
             if (isOpen) {
                 focusableElements = getFocusable();
@@ -2712,24 +2538,20 @@
         });
         observer.observe(modal, { childList: true, subtree: true });
 
-        // ── Form submission: build mailto URL ──
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Gather values
             const name = document.getElementById('modalName').value.trim();
             const email = document.getElementById('modalEmail').value.trim();
             const phone = document.getElementById('modalPhone').value.trim();
             const time = document.getElementById('modalTime').value;
             const message = document.getElementById('modalMessage').value.trim();
 
-            // Basic validation
             if (!name || !email) {
                 alert('Please fill in your name and email address.');
                 return;
             }
 
-            // Build email body
             let body = 'New consultation request from 2C Legal website:\n\n';
             body += 'Name: ' + name + '\n';
             body += 'Email: ' + email + '\n';
@@ -2739,7 +2561,6 @@
 
             const subject = 'Consultation Request from ' + name;
 
-            // Open mail client
             const mailtoUrl =
                 'mailto:2c.legaladvisory@gmail.com' +
                 '?subject=' + encodeURIComponent(subject) +
@@ -2747,7 +2568,6 @@
 
             window.location.href = mailtoUrl;
 
-            // Show a brief success message and close modal
             const btn = form.querySelector('.btn-submit');
             const originalText = btn.textContent;
             btn.textContent = '✓ Sent! Opening your email…';
@@ -2756,7 +2576,6 @@
 
             setTimeout(function() {
                 closeModal();
-                // Reset form and button after a delay
                 setTimeout(function() {
                     form.reset();
                     btn.textContent = originalText;
@@ -2766,7 +2585,6 @@
             }, 1200);
         });
 
-        // Allow the "Book a Strategy Call" in the header to open the modal too
         const headerBookBtn = document.querySelector('.book-desktop');
         if (headerBookBtn) {
             headerBookBtn.addEventListener('click', function(e) {
@@ -2775,7 +2593,6 @@
             });
         }
 
-        // Also handle the "Book a Call" in the hero
         const heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
         if (heroBookBtn && heroBookBtn.textContent.trim() === 'Book a Call') {
             heroBookBtn.addEventListener('click', function(e) {
@@ -2784,7 +2601,6 @@
             });
         }
 
-        // Expose open/close for debugging or other uses
         window.__modal = { open: openModal, close: closeModal };
     })();
 </script>
