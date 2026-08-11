@@ -201,8 +201,9 @@
             display: flex;
             align-items: center;
             gap: 5px;
-            cursor: default;
+            cursor: pointer;
             white-space: nowrap;
+            position: relative;
         }
         .caret {
             width: 8px;
@@ -212,6 +213,40 @@
             transform: rotate(45deg);
             margin-top: -3px;
             flex-shrink: 0;
+            transition: transform .2s ease;
+        }
+        .has-caret.active .caret {
+            transform: rotate(225deg);
+            margin-top: 0px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: -12px;
+            background: var(--bg-1);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            padding: 10px 0;
+            min-width: 230px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+            flex-direction: column;
+            gap: 2px;
+        }
+        .has-caret.active .dropdown-menu {
+            display: flex;
+        }
+        .dropdown-menu a {
+            padding: 8px 20px;
+            font-size: 13.5px;
+            color: var(--ink-1);
+            transition: background .15s ease, color .15s ease;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .dropdown-menu a:hover {
+            background: var(--bg-2);
+            color: var(--accent);
         }
         .navactions {
             display: flex;
@@ -425,6 +460,7 @@
             gap: 12px;
             transition: background .2s ease;
             cursor: default;
+            scroll-margin-top: calc(var(--nav-height) + 24px);
         }
         .practice-card:hover {
             background: var(--bg-2);
@@ -1406,6 +1442,24 @@
                 gap: 24px;
                 font-size: 14px;
             }
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border: none;
+                padding: 8px 0 0 16px;
+                background: transparent;
+                min-width: auto;
+            }
+            .dropdown-menu a {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            .has-caret .dropdown-menu {
+                display: none;
+            }
+            .has-caret.active .dropdown-menu {
+                display: flex;
+            }
         }
 
         /* ── ≤600px ────────────────────── */
@@ -1691,7 +1745,15 @@
             <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
             <div class="navlinks" id="navlinks">
                 <a href="#about">About</a>
-                <span class="has-caret">Services <span class="caret"></span></span>
+                <span class="has-caret" id="servicesDropdown">Services <span class="caret"></span>
+                    <div class="dropdown-menu">
+                        <a href="#card-startup" data-target="card-startup">Startup Law &amp; Corporate Structuring</a>
+                        <a href="#card-tech" data-target="card-tech">Tech, IP &amp; Digital Assets</a>
+                        <a href="#card-data" data-target="card-data">Data Protection &amp; Compliance</a>
+                        <a href="#card-contracts" data-target="card-contracts">Commercial Contracts</a>
+                        <a href="#card-investment" data-target="card-investment">Investment Readiness</a>
+                    </div>
+                </span>
                 <a href="#assessment">Legal Health Check</a>
                 <a href="#articles">Articles</a>
                 <a href="#contact">Contact</a>
@@ -1766,27 +1828,27 @@
                 <a href="#footer-resources" class="view-all">View All Services →</a>
             </div>
             <div class="practice-grid">
-                <div class="practice-card">
+                <div class="practice-card" id="card-startup">
                     <div class="number">01</div>
                     <h3>Startup Law &amp; Corporate Structuring</h3>
                     <p>Incorporation, founders' agreements, share structuring, and CAMA 2020-compliant governance documents from day one.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-tech">
                     <div class="number">02</div>
                     <h3>Tech, IP &amp; Digital Assets</h3>
                     <p>IP assignment and protection, software licensing, and regulatory frameworks for crypto, fintech, and digital asset products.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-data">
                     <div class="number">03</div>
                     <h3>Data Protection &amp; Compliance</h3>
                     <p>NDPA 2023 audits, privacy policies, and data governance frameworks built to survive regulatory scrutiny, not just paperwork.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-contracts">
                     <div class="number">04</div>
                     <h3>Commercial Contracts</h3>
                     <p>Vendor agreements, service contracts, and dispute resolution clauses drafted under the Arbitration and Mediation Act 2023.</p>
                 </div>
-                <div class="practice-card">
+                <div class="practice-card" id="card-investment">
                     <div class="number">05</div>
                     <h3>Investment Readiness</h3>
                     <p>Due diligence prep, cap table clean-up, and investor-facing documentation — so funding conversations don't stall on legal gaps.</p>
@@ -2121,6 +2183,99 @@
                     closeMenu();
                 }
             }, 150);
+        });
+    })();
+
+    /* ═══════════ SERVICES DROPDOWN ═══════════ */
+    (function() {
+        const dropdownTrigger = document.getElementById('servicesDropdown');
+        if (!dropdownTrigger) return;
+
+        let isOpen = false;
+        let closeTimeout = null;
+
+        function openDropdown() {
+            if (closeTimeout) {
+                clearTimeout(closeTimeout);
+                closeTimeout = null;
+            }
+            isOpen = true;
+            dropdownTrigger.classList.add('active');
+        }
+
+        function closeDropdown() {
+            if (closeTimeout) {
+                clearTimeout(closeTimeout);
+                closeTimeout = null;
+            }
+            isOpen = false;
+            dropdownTrigger.classList.remove('active');
+        }
+
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            if (isOpen) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+
+        // Click on the trigger toggles the dropdown (for mobile & tap)
+        dropdownTrigger.addEventListener('click', toggleDropdown);
+
+        // Hover handling for desktop (opens on hover)
+        dropdownTrigger.addEventListener('mouseenter', function(e) {
+            if (window.innerWidth > 768) {
+                openDropdown();
+            }
+        });
+
+        dropdownTrigger.addEventListener('mouseleave', function(e) {
+            if (window.innerWidth > 768) {
+                closeTimeout = setTimeout(closeDropdown, 250);
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (isOpen && !dropdownTrigger.contains(e.target)) {
+                closeDropdown();
+            }
+        });
+
+        // Handle dropdown item clicks: smooth scroll to the corresponding practice card
+        const dropdownLinks = dropdownTrigger.querySelectorAll('.dropdown-menu a');
+        dropdownLinks.forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('data-target');
+                if (targetId) {
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        const navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'), 10) || 72;
+                        const extraOffset = 24;
+                        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                // Close dropdown after clicking an item (especially on mobile)
+                closeDropdown();
+                // Also close mobile menu if open
+                const navlinks = document.getElementById('navlinks');
+                if (navlinks && navlinks.classList.contains('active')) {
+                    const burger = document.getElementById('burger');
+                    const navOverlay = document.getElementById('navOverlay');
+                    navlinks.classList.remove('active');
+                    burger.classList.remove('active');
+                    burger.setAttribute('aria-expanded', 'false');
+                    navOverlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
         });
     })();
 
