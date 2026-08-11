@@ -569,30 +569,21 @@
             font-size: 14.5px;
             margin-bottom: 32px;
         }
-        .founder-credential-list {
+
+        /* ── Founder Bio (replaces credentials list) ── */
+        .founder-bio {
             display: flex;
             flex-direction: column;
-            gap: 0;
-            width: 100%;
-        }
-        .credential-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 14px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            font-size: 14px;
-            gap: 12px;
-        }
-        .credential-row:first-child {
+            gap: 16px;
+            margin-top: 0;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 28px;
         }
-        .credential-row .label {
+        .founder-bio p {
             color: var(--ink-1);
-            flex-shrink: 0;
-        }
-        .credential-row .value {
-            color: var(--ink-0);
-            text-align: right;
+            font-size: 14.5px;
+            line-height: 1.7;
+            margin: 0;
         }
 
         /* ── Blueprint ─────────────────── */
@@ -1332,13 +1323,11 @@
             .founder-content blockquote {
                 font-size: 20px;
             }
-            .credential-row {
-                flex-direction: column;
-                gap: 2px;
-                padding: 12px 0;
+            .founder-bio {
+                padding-top: 20px;
             }
-            .credential-row .value {
-                text-align: left;
+            .founder-bio p {
+                font-size: 14px;
             }
             .blueprint-list {
                 grid-template-columns: 1fr;
@@ -1489,6 +1478,9 @@
             .founder-content blockquote {
                 font-size: 18px;
             }
+            .founder-bio p {
+                font-size: 13.5px;
+            }
             .blueprint-left h2 {
                 font-size: 24px;
             }
@@ -1596,7 +1588,7 @@
             .founder-content .attribution {
                 font-size: 13px;
             }
-            .credential-row {
+            .founder-bio p {
                 font-size: 13px;
             }
             .approach-table .row-item {
@@ -1858,23 +1850,12 @@
                     <span class="eyebrow">Founder &amp; Principal</span>
                     <blockquote>"Founders don't need more legal jargon. They need someone who tells them clearly what protects them and what doesn't."</blockquote>
                     <div class="attribution">Comforter Bolere Ketebu (CBK) — Founder &amp; Principal, 2C Legal Advisory</div>
-                    <div class="founder-credential-list">
-                        <div class="credential-row">
-                            <span class="label">Called to the Nigerian Bar</span>
-                            <span class="value">2021</span>
-                        </div>
-                        <div class="credential-row">
-                            <span class="label">LLB</span>
-                            <span class="value">University of Benin</span>
-                        </div>
-                        <div class="credential-row">
-                            <span class="label">Member, NBA &amp; NBA Section on Business Law</span>
-                            <span class="value">Ongoing</span>
-                        </div>
-                        <div class="credential-row">
-                            <span class="label">Board Advisory, Health Technology Sector</span>
-                            <span class="value">Current</span>
-                        </div>
+
+                    <!-- Bio replaces the credentials list -->
+                    <div class="founder-bio">
+                        <p>Comforter Bolere Ketebu, Esq. is the Founder and Principal Counsel of 2C Legal Advisory (2CLA), a corporate, commercial, technology, and startup-focused law practice that helps founders, SMEs, and growth-stage businesses build legally sound and investment-ready companies.</p>
+                        <p>With experience advising startups, business owners, and emerging ventures across corporate governance, fundraising, commercial transactions, regulatory compliance, data protection, and technology law, Comforter is passionate about helping entrepreneurs identify legal risks before they become business problems.</p>
+                        <p>Beyond her legal practice, she is committed to making quality legal guidance more accessible to founders through legal education and founder-focused content. She is the creator of the Startup Blueprint Series, a YouTube platform where she shares practical legal and business insights to help entrepreneurs build sustainable, compliant, and scalable businesses. She is also exploring innovative ways to leverage AI to help founders identify legal gaps early and access affordable legal support.</p>
                     </div>
                 </div>
             </div>
