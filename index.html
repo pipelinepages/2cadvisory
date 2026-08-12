@@ -2457,30 +2457,32 @@
 
         /* ══════════════════════════════════════════════════
            BLOGGER ARTICLES + EXPANDABLE MODAL
+           — The article "The Essence of Gifting in Corporate Organizations" is
+             filtered out and will never be displayed.
            ══════════════════════════════════════════════════ */
         (function() {
-            const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
-            const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
-            const grid = document.getElementById('articlesGrid');
-            let articlesData = [];
-            let completed = false;
+            var BLOG_URL = 'https://playbookbymissb.blogspot.com/';
+            var FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=12&callback=renderBloggerArticles';
+            var grid = document.getElementById('articlesGrid');
+            var articlesData = [];
+            var completed = false;
 
-            // ── utilities ──────────────────────────────
+            // ── utility functions ──────────────────────
             function stripHtml(html) {
-                const temp = document.createElement('div');
+                var temp = document.createElement('div');
                 temp.innerHTML = html || '';
                 return (temp.textContent || temp.innerText || '').replace(/\s+/g, ' ').trim();
             }
 
             function truncate(text, maxLength) {
                 if (!text || text.length <= maxLength) return text || '';
-                const shortened = text.slice(0, maxLength + 1);
-                const lastSpace = shortened.lastIndexOf(' ');
+                var shortened = text.slice(0, maxLength + 1);
+                var lastSpace = shortened.lastIndexOf(' ');
                 return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
             }
 
             function formatDate(value) {
-                const date = new Date(value);
+                var date = new Date(value);
                 if (Number.isNaN(date.getTime())) return '';
                 return new Intl.DateTimeFormat('en-NG', {
                     year: 'numeric',
@@ -2490,13 +2492,13 @@
             }
 
             function getPostUrl(entry) {
-                const links = Array.isArray(entry.link) ? entry.link : [];
-                const alternate = links.find(function(link) { return link.rel === 'alternate' && link.href; });
+                var links = Array.isArray(entry.link) ? entry.link : [];
+                var alternate = links.find(function(link) { return link.rel === 'alternate' && link.href; });
                 return alternate ? alternate.href : BLOG_URL;
             }
 
             function getCategory(entry) {
-                const categories = Array.isArray(entry.category) ? entry.category : [];
+                var categories = Array.isArray(entry.category) ? entry.category : [];
                 return categories.length && categories[0].term ? categories[0].term : 'Insights';
             }
 
@@ -2505,49 +2507,64 @@
                     (entry.summary && entry.summary.$t ? entry.summary.$t : '');
             }
 
+            // ── should we hide this article? ────────────
+            function isHiddenArticle(title) {
+                var hideTitles = [
+                    'The Essence of Gifting in Corporate Organizations'
+                ];
+                if (!title) return false;
+                var normalized = title.trim().toLowerCase();
+                return hideTitles.some(function(h) {
+                    return normalized === h.trim().toLowerCase();
+                });
+            }
+
             // ── render article card ─────────────────────
             function makeArticleCard(entry, index) {
-                const url = getPostUrl(entry);
-                const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
-                const rawFull = getFullContent(entry);
-                const rawExcerpt = entry.summary && entry.summary.$t ? entry.summary.$t : rawFull;
-                const excerpt = truncate(stripHtml(rawExcerpt), 185);
-                const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
-                const category = getCategory(entry);
+                var url = getPostUrl(entry);
+                var title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
 
-                const article = document.createElement('article');
+                // Safety: if this is the hidden article, skip entirely (should already be filtered)
+                if (isHiddenArticle(title)) return null;
+
+                var rawFull = getFullContent(entry);
+                var rawExcerpt = entry.summary && entry.summary.$t ? entry.summary.$t : rawFull;
+                var excerpt = truncate(stripHtml(rawExcerpt), 185);
+                var date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
+                var category = getCategory(entry);
+
+                var article = document.createElement('article');
                 article.className = 'article-card is-blog-post';
                 article.dataset.index = index;
 
-                const categoryEl = document.createElement('div');
+                var categoryEl = document.createElement('div');
                 categoryEl.className = 'article-category';
                 categoryEl.textContent = category;
 
-                const heading = document.createElement('h3');
-                const titleLink = document.createElement('a');
+                var heading = document.createElement('h3');
+                var titleLink = document.createElement('a');
                 titleLink.href = url;
                 titleLink.target = '_blank';
                 titleLink.rel = 'noopener noreferrer';
                 titleLink.textContent = title;
                 heading.appendChild(titleLink);
 
-                const excerptEl = document.createElement('p');
+                var excerptEl = document.createElement('p');
                 excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
 
-                const meta = document.createElement('div');
+                var meta = document.createElement('div');
                 meta.className = 'article-meta';
 
-                const dateEl = document.createElement('span');
+                var dateEl = document.createElement('span');
                 dateEl.className = 'date';
                 dateEl.textContent = date;
 
-                const readMore = document.createElement('button');
+                var readMore = document.createElement('button');
                 readMore.className = 'read-more';
                 readMore.textContent = 'Read more →';
                 readMore.setAttribute('aria-label', 'Read full article: ' + title);
                 readMore.type = 'button';
 
-                // Store data for modal
                 readMore.addEventListener('click', function(e) {
                     e.preventDefault();
                     openArticleModal(index);
@@ -2564,16 +2581,16 @@
             }
 
             // ── modal controls ──────────────────────────
-            const articleModal = document.getElementById('articleModal');
-            const articleModalClose = document.getElementById('articleModalClose');
-            const articleModalTitle = document.getElementById('articleModalTitle');
-            const articleModalCategory = document.getElementById('articleModalCategory');
-            const articleModalDate = document.getElementById('articleModalDate');
-            const articleModalBody = document.getElementById('articleModalBody');
-            let articleModalOpen = false;
+            var articleModal = document.getElementById('articleModal');
+            var articleModalClose = document.getElementById('articleModalClose');
+            var articleModalTitle = document.getElementById('articleModalTitle');
+            var articleModalCategory = document.getElementById('articleModalCategory');
+            var articleModalDate = document.getElementById('articleModalDate');
+            var articleModalBody = document.getElementById('articleModalBody');
+            var articleModalOpen = false;
 
             function openArticleModal(index) {
-                const data = articlesData[index];
+                var data = articlesData[index];
                 if (!data) return;
 
                 articleModalTitle.textContent = data.title;
@@ -2586,12 +2603,10 @@
                 document.documentElement.style.overflow = 'hidden';
                 articleModalOpen = true;
 
-                // Focus the close button after a short delay
                 setTimeout(function() {
                     articleModalClose.focus();
                 }, 150);
 
-                // Trap focus inside modal
                 trapFocus(articleModal);
             }
 
@@ -2602,8 +2617,7 @@
                 document.documentElement.style.overflow = '';
                 articleModalOpen = false;
 
-                // Return focus to the "Read more" button that was clicked
-                const activeReadMore = document.querySelector('.article-card .read-more:focus');
+                var activeReadMore = document.querySelector('.article-card .read-more:focus');
                 if (activeReadMore) {
                     activeReadMore.focus();
                 }
@@ -2611,12 +2625,12 @@
 
             // ── focus trapping ──────────────────────────
             function trapFocus(container) {
-                const focusable = container.querySelectorAll(
+                var focusable = container.querySelectorAll(
                     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
                 );
                 if (!focusable.length) return;
-                const first = focusable[0];
-                const last = focusable[focusable.length - 1];
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
 
                 container.addEventListener('keydown', function trap(e) {
                     if (e.key !== 'Tab') return;
@@ -2629,7 +2643,6 @@
                     }
                 });
 
-                // Store cleanup
                 container._trapCleanup = function() {
                     container.removeEventListener('keydown', trap);
                 };
@@ -2653,7 +2666,7 @@
             // ── render from feed ────────────────────────
             window.renderBloggerArticles = function(data) {
                 if (!grid) return;
-                const entries = data && data.feed && Array.isArray(data.feed.entry) ?
+                var entries = data && data.feed && Array.isArray(data.feed.entry) ?
                     data.feed.entry :
                     [];
 
@@ -2662,13 +2675,24 @@
                     return;
                 }
 
+                // ── FILTER: exclude the hidden article ──
+                var filteredEntries = entries.filter(function(entry) {
+                    var title = entry.title && entry.title.$t ? entry.title.$t : '';
+                    return !isHiddenArticle(title);
+                });
+
+                if (!filteredEntries.length) {
+                    showFeedError();
+                    return;
+                }
+
                 completed = true;
                 grid.innerHTML = '';
                 grid.setAttribute('aria-busy', 'false');
 
-                // Store full data
-                articlesData = entries.map(function(entry, idx) {
-                    const fullContent = getFullContent(entry);
+                // Store filtered data for modal
+                articlesData = filteredEntries.map(function(entry, idx) {
+                    var fullContent = getFullContent(entry);
                     return {
                         title: entry.title && entry.title.$t ? entry.title.$t : 'Untitled',
                         url: getPostUrl(entry),
@@ -2678,9 +2702,16 @@
                     };
                 });
 
-                entries.slice(0, 6).forEach(function(entry, idx) {
-                    grid.appendChild(makeArticleCard(entry, idx));
+                // Render up to 6 of the filtered articles
+                filteredEntries.slice(0, 6).forEach(function(entry, idx) {
+                    var card = makeArticleCard(entry, idx);
+                    if (card) grid.appendChild(card);
                 });
+
+                // If after filtering we have fewer than 3 cards, fill the grid with a message
+                if (grid.children.length === 0) {
+                    showFeedError();
+                }
             };
 
             function showFeedError() {
@@ -2689,11 +2720,11 @@
                 grid.setAttribute('aria-busy', 'false');
                 grid.innerHTML = '';
 
-                const fallback = document.createElement('div');
+                var fallback = document.createElement('div');
                 fallback.className = 'articles-fallback';
                 fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
 
-                const link = document.createElement('a');
+                var link = document.createElement('a');
                 link.href = BLOG_URL;
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
@@ -2705,7 +2736,7 @@
             // ── bootstrap ────────────────────────────────
             if (!grid) return;
 
-            const feedScript = document.createElement('script');
+            var feedScript = document.createElement('script');
             feedScript.src = FEED_URL;
             feedScript.async = true;
             feedScript.onerror = showFeedError;
@@ -2718,12 +2749,12 @@
            CONSULT MODAL
            ══════════════════════════════════════════════════ */
         (function() {
-            const modal = document.getElementById('consultModal');
-            const closeBtn = document.getElementById('modalClose');
-            const form = document.getElementById('consultForm');
-            const triggers = document.querySelectorAll('.modal-trigger');
+            var modal = document.getElementById('consultModal');
+            var closeBtn = document.getElementById('modalClose');
+            var form = document.getElementById('consultForm');
+            var triggers = document.querySelectorAll('.modal-trigger');
 
-            let isOpen = false;
+            var isOpen = false;
 
             function openModal() {
                 if (isOpen) return;
@@ -2732,7 +2763,7 @@
                 document.body.classList.add('modal-open');
                 document.documentElement.style.overflow = 'hidden';
                 setTimeout(function() {
-                    const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
+                    var firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
                     if (firstInput) firstInput.focus();
                 }, 100);
             }
@@ -2743,7 +2774,7 @@
                 modal.classList.remove('active');
                 document.body.classList.remove('modal-open');
                 document.documentElement.style.overflow = '';
-                const lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
+                var lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
                 if (lastTrigger) lastTrigger.focus();
             }
 
@@ -2764,15 +2795,14 @@
                 if (e.key === 'Escape' && isOpen) closeModal();
             });
 
-            // Focus trap for consult modal
             modal.addEventListener('keydown', function(e) {
                 if (e.key !== 'Tab') return;
-                const focusable = Array.from(modal.querySelectorAll(
+                var focusable = Array.from(modal.querySelectorAll(
                     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
                 )).filter(function(el) { return !el.disabled && el.offsetParent !== null; });
                 if (!focusable.length) return;
-                const first = focusable[0];
-                const last = focusable[focusable.length - 1];
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
                 if (e.shiftKey && document.activeElement === first) {
                     e.preventDefault();
                     last.focus();
@@ -2785,33 +2815,33 @@
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                const name = document.getElementById('modalName').value.trim();
-                const email = document.getElementById('modalEmail').value.trim();
-                const phone = document.getElementById('modalPhone').value.trim();
-                const time = document.getElementById('modalTime').value;
-                const message = document.getElementById('modalMessage').value.trim();
+                var name = document.getElementById('modalName').value.trim();
+                var email = document.getElementById('modalEmail').value.trim();
+                var phone = document.getElementById('modalPhone').value.trim();
+                var time = document.getElementById('modalTime').value;
+                var message = document.getElementById('modalMessage').value.trim();
 
                 if (!name || !email) {
                     alert('Please fill in your name and email address.');
                     return;
                 }
 
-                let body = 'New consultation request from 2C Legal website:\n\n';
+                var body = 'New consultation request from 2C Legal website:\n\n';
                 body += 'Name: ' + name + '\n';
                 body += 'Email: ' + email + '\n';
                 if (phone) body += 'Phone: ' + phone + '\n';
                 if (time) body += 'Preferred time: ' + time + '\n';
                 if (message) body += '\nMessage:\n' + message + '\n';
 
-                const subject = 'Consultation Request from ' + name;
-                const mailtoUrl = 'mailto:2c.legaladvisory@gmail.com' +
+                var subject = 'Consultation Request from ' + name;
+                var mailtoUrl = 'mailto:2c.legaladvisory@gmail.com' +
                     '?subject=' + encodeURIComponent(subject) +
                     '&body=' + encodeURIComponent(body);
 
                 window.location.href = mailtoUrl;
 
-                const btn = form.querySelector('.btn-submit');
-                const originalText = btn.textContent;
+                var btn = form.querySelector('.btn-submit');
+                var originalText = btn.textContent;
                 btn.textContent = '✓ Sent! Opening your email…';
                 btn.disabled = true;
                 btn.style.opacity = '0.7';
@@ -2827,8 +2857,7 @@
                 }, 1200);
             });
 
-            // Header and hero "Book a Call" buttons
-            const headerBookBtn = document.querySelector('.book-desktop');
+            var headerBookBtn = document.querySelector('.book-desktop');
             if (headerBookBtn) {
                 headerBookBtn.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -2836,7 +2865,7 @@
                 });
             }
 
-            const heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
+            var heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
             if (heroBookBtn && heroBookBtn.textContent.trim() === 'Book a Call') {
                 heroBookBtn.addEventListener('click', function(e) {
                     e.preventDefault();
