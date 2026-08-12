@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>2C Legal</title>
     <link rel="icon" type="image/png" href="2clogo.png">
-<link rel="apple-touch-icon" href="2clogo.png">
+    <link rel="apple-touch-icon" href="2clogo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
+        /* ── Root & Reset ──────────────────────────── */
         :root {
             --bg-0: #070f1c;
             --bg-1: #0c1728;
@@ -26,16 +27,13 @@
             --maxw: 1180px;
             --nav-height: 72px;
         }
-
         * {
             box-sizing: border-box;
         }
-
         html {
             scroll-behavior: smooth;
             scroll-padding-top: var(--nav-height);
         }
-
         body {
             margin: 0;
             background: var(--bg-0);
@@ -46,11 +44,9 @@
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
         }
-
         body.modal-open {
             overflow: hidden;
         }
-
         h1,
         h2,
         h3,
@@ -66,30 +62,25 @@
             margin: 0;
             color: var(--ink-0);
         }
-
         a {
             color: inherit;
             text-decoration: none;
         }
-
         img {
             max-width: 100%;
             display: block;
             height: auto;
         }
-
         ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .wrap {
             max-width: var(--maxw);
             margin: 0 auto;
             padding: 0 32px;
         }
-
         .eyebrow {
             display: inline-flex;
             align-items: center;
@@ -109,7 +100,6 @@
             box-shadow: 0 0 8px var(--accent);
             flex-shrink: 0;
         }
-
         .btn {
             display: inline-flex;
             align-items: center;
@@ -155,7 +145,7 @@
             min-height: 40px;
         }
 
-        /* ── Header ─────────────────────── */
+        /* ── Header ─────────────────────────────────── */
         header {
             position: sticky;
             top: 0;
@@ -188,7 +178,6 @@
         footer .logo img {
             height: 64px;
         }
-
         .navlinks {
             display: flex;
             align-items: center;
@@ -209,8 +198,6 @@
             gap: 12px;
             flex-shrink: 0;
         }
-
-        /* Burger */
         .burger {
             display: none;
             width: 44px;
@@ -260,8 +247,6 @@
             top: 0;
             transform: rotate(-45deg);
         }
-
-        /* Mobile nav overlay */
         .nav-overlay {
             display: none;
             position: fixed;
@@ -279,7 +264,7 @@
             pointer-events: auto;
         }
 
-        /* ── Hero ──────────────────────── */
+        /* ── Hero ──────────────────────────────────── */
         .hero {
             position: relative;
             overflow: hidden;
@@ -327,7 +312,7 @@
             flex-wrap: wrap;
         }
 
-        /* ── Sections ──────────────────── */
+        /* ── Sections ───────────────────────────────── */
         section {
             padding: 80px 0;
         }
@@ -368,7 +353,7 @@
             font-size: 15px;
         }
 
-        /* ── Practice Areas ────────────── */
+        /* ── Practice Areas ────────────────────────── */
         .practice-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -412,7 +397,7 @@
             line-height: 1.5;
         }
 
-        /* ── Approach Table ────────────── */
+        /* ── Approach Table ────────────────────────── */
         .approach {
             background: var(--bg-0);
             overflow: hidden;
@@ -473,7 +458,7 @@
             font-weight: 500;
         }
 
-        /* ── Founder ───────────────────── */
+        /* ── Founder ────────────────────────────────── */
         .founder {
             background: var(--bg-1);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -524,7 +509,6 @@
             font-size: 14.5px;
             margin-bottom: 32px;
         }
-
         .founder-bio {
             display: flex;
             flex-direction: column;
@@ -540,7 +524,7 @@
             margin: 0;
         }
 
-        /* ── Blueprint ─────────────────── */
+        /* ── Blueprint ─────────────────────────────── */
         .blueprint {
             background: var(--bg-0);
         }
@@ -599,7 +583,7 @@
             border-radius: 1px;
         }
 
-        /* ── Articles ──────────────────── */
+        /* ── Articles ───────────────────────────────── */
         .articles {
             background: var(--bg-1);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -670,11 +654,21 @@
             font-weight: 500;
             font-size: 13px;
             transition: color .15s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+            padding: 0;
         }
         .article-meta .read-more:hover {
             color: var(--accent-2);
             text-decoration: underline;
             text-underline-offset: 3px;
+        }
+        .article-meta .read-more:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+            border-radius: 2px;
         }
 
         .articles-loading,
@@ -721,14 +715,8 @@
                 box-shadow: 0 0 0 0 rgba(94, 234, 212, 0);
             }
         }
-        .article-card.is-blog-post h3 a:focus-visible,
-        .article-card.is-blog-post .read-more:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 4px;
-            border-radius: 2px;
-        }
 
-        /* ── Legal Health Check ─────────── */
+        /* ── Legal Health Check ────────────────────── */
         .assess {
             background: linear-gradient(180deg, var(--bg-1), var(--bg-0));
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -793,7 +781,6 @@
             color: var(--ink-2);
             margin-top: 13px;
         }
-        /* ---- Added initiative note ---- */
         .initiative-note {
             font-size: 13px;
             color: var(--accent);
@@ -876,7 +863,7 @@
             background: rgba(7, 15, 28, .72);
         }
 
-        /* ── About ─────────────────────── */
+        /* ── About ──────────────────────────────────── */
         .about {
             background: var(--bg-1);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -958,7 +945,7 @@
             line-height: 1.5;
         }
 
-        /* ── CTA Band ──────────────────── */
+        /* ── CTA Band ───────────────────────────────── */
         .cta-band {
             background: linear-gradient(135deg, #0d3b34, #0a2a2e);
             border-radius: var(--radius);
@@ -987,7 +974,7 @@
             line-height: 1.5;
         }
 
-        /* ── Footer ────────────────────── */
+        /* ── Footer ─────────────────────────────────── */
         footer {
             padding: 56px 0 24px;
             background: var(--bg-0);
@@ -1059,9 +1046,190 @@
             color: var(--accent);
         }
 
-        /* ══════════════════════════════════════
-           MODAL
-           ══════════════════════════════════════ */
+        /* ══════════════════════════════════════════════
+           ARTICLE MODAL
+           ══════════════════════════════════════════════ */
+        .article-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+        .article-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .article-modal-box {
+            background: var(--bg-1);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            max-width: 720px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 44px 44px 40px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+            transform: scale(0.95) translateY(16px);
+            transition: transform .35s cubic-bezier(0.22, 1, 0.36, 1), opacity .35s ease;
+            opacity: 0;
+            position: relative;
+        }
+        .article-modal-overlay.active .article-modal-box {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .article-modal-close {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: rgba(7, 15, 28, 0.7);
+            border: 1px solid var(--card-border);
+            border-radius: 50%;
+            color: var(--ink-1);
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            transition: background .2s ease, color .2s ease, border-color .2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            margin-bottom: 8px;
+            backdrop-filter: blur(4px);
+        }
+        .article-modal-close:hover {
+            background: rgba(94, 234, 212, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .article-modal-box .article-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(24px, 3.2vw, 32px);
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--ink-0);
+            margin: 0 0 6px 0;
+            padding-right: 12px;
+        }
+        .article-modal-box .article-meta-top {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            color: var(--ink-2);
+            font-size: 13px;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .article-modal-box .article-meta-top .cat {
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+        .article-modal-box .article-meta-top .date {
+            color: var(--ink-2);
+        }
+        .article-modal-box .article-body {
+            color: var(--ink-1);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+        .article-modal-box .article-body p {
+            margin: 0 0 1.2em 0;
+        }
+        .article-modal-box .article-body h2,
+        .article-modal-box .article-body h3,
+        .article-modal-box .article-body h4 {
+            font-family: 'Sora', sans-serif;
+            color: var(--ink-0);
+            margin: 1.6em 0 0.6em 0;
+        }
+        .article-modal-box .article-body h2 {
+            font-size: 22px;
+        }
+        .article-modal-box .article-body h3 {
+            font-size: 19px;
+        }
+        .article-modal-box .article-body ul,
+        .article-modal-box .article-body ol {
+            padding-left: 24px;
+            margin: 0 0 1.2em 0;
+        }
+        .article-modal-box .article-body li {
+            margin-bottom: 0.4em;
+        }
+        .article-modal-box .article-body blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 20px;
+            margin: 0 0 1.2em 0;
+            color: var(--ink-0);
+            font-style: italic;
+        }
+        .article-modal-box .article-body img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1.2em 0;
+        }
+        .article-modal-box .article-body a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+        .article-modal-box .article-body a:hover {
+            color: var(--accent-2);
+        }
+        .article-modal-box .article-body pre,
+        .article-modal-box .article-body code {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            padding: 0.2em 0.5em;
+            font-size: 0.9em;
+            color: var(--ink-0);
+            overflow-x: auto;
+        }
+        .article-modal-box .article-body pre {
+            padding: 16px;
+            overflow-x: auto;
+        }
+        .article-modal-box .article-body hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 1.6em 0;
+        }
+
+        /* ── Article modal scrollbar ──────────────── */
+        .article-modal-box::-webkit-scrollbar {
+            width: 5px;
+        }
+        .article-modal-box::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .article-modal-box::-webkit-scrollbar-thumb {
+            background: var(--card-border);
+            border-radius: 4px;
+        }
+        .article-modal-box::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ── Consult modal (unchanged) ─────────────── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1080,7 +1248,6 @@
             display: flex;
             opacity: 1;
         }
-
         .modal-box {
             background: var(--bg-1);
             border: 1px solid var(--card-border);
@@ -1099,7 +1266,6 @@
             transform: scale(1) translateY(0);
             opacity: 1;
         }
-
         .modal-close {
             float: right;
             background: none;
@@ -1115,7 +1281,6 @@
         .modal-close:hover {
             color: var(--ink-0);
         }
-
         .modal-box h2 {
             font-family: 'Sora', sans-serif;
             font-size: 24px;
@@ -1129,7 +1294,6 @@
             margin: 0 0 24px 0;
             line-height: 1.6;
         }
-
         .modal-form label {
             display: block;
             font-size: 13px;
@@ -1192,15 +1356,12 @@
             transform: translateY(0);
             box-shadow: 0 4px 12px -4px rgba(94, 234, 212, 0.3);
         }
-
         .modal-form .fine {
             font-size: 12px;
             color: var(--ink-2);
             text-align: center;
             margin-top: 16px;
         }
-
-        /* ── Scrollbar styling for modal ── */
         .modal-box::-webkit-scrollbar {
             width: 4px;
         }
@@ -1215,11 +1376,9 @@
             background: var(--accent);
         }
 
-        /* ══════════════════════════════════════
-           RESPONSIVE BREAKPOINTS
-           ══════════════════════════════════════ */
-
-        /* ── ≤1200px ───────────────────── */
+        /* ══════════════════════════════════════════════
+           RESPONSIVE
+           ══════════════════════════════════════════════ */
         @media (max-width: 1200px) {
             .skyline {
                 width: 50%;
@@ -1235,8 +1394,6 @@
                 grid-column: span 1;
             }
         }
-
-        /* ── ≤1024px ───────────────────── */
         @media (max-width: 1024px) {
             .hero {
                 padding: 72px 0 60px;
@@ -1313,9 +1470,11 @@
                 padding: 32px 28px;
                 max-width: 480px;
             }
+            .article-modal-box {
+                padding: 32px 28px;
+                max-width: 600px;
+            }
         }
-
-        /* ── ≤768px ────────────────────── */
         @media (max-width: 768px) {
             .wrap {
                 padding: 0 24px;
@@ -1468,24 +1627,6 @@
                 grid-template-columns: 1fr;
                 gap: 32px;
             }
-            .score-card {
-                grid-template-columns: 1fr;
-                gap: 18px;
-                padding: 24px;
-            }
-            .score-left {
-                border-right: none;
-                border-bottom: 1px solid var(--card-border);
-                padding-right: 0;
-                padding-bottom: 18px;
-            }
-            .gauge-wrap {
-                width: 120px;
-                height: 120px;
-            }
-            .gauge-num {
-                font-size: 30px;
-            }
             .about-grid {
                 grid-template-columns: 1fr;
                 gap: 32px;
@@ -1534,9 +1675,25 @@
             .modal-box h2 {
                 font-size: 20px;
             }
+            .article-modal-overlay {
+                padding: 16px;
+                align-items: flex-end;
+            }
+            .article-modal-box {
+                padding: 28px 20px 24px;
+                max-width: 100%;
+                border-radius: var(--radius) var(--radius) 0 0;
+                max-height: 92vh;
+            }
+            .article-modal-box .article-title {
+                font-size: 22px;
+            }
+            .article-modal-close {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
         }
-
-        /* ── ≤600px ────────────────────── */
         @media (max-width: 600px) {
             .wrap {
                 padding: 0 18px;
@@ -1631,20 +1788,6 @@
             .cta-band h2 {
                 font-size: 20px;
             }
-            .score-card {
-                padding: 20px;
-                gap: 14px;
-            }
-            .gauge-wrap {
-                width: 100px;
-                height: 100px;
-            }
-            .gauge-num {
-                font-size: 26px;
-            }
-            .risk-row {
-                font-size: 12.5px;
-            }
             section {
                 padding: 44px 0;
             }
@@ -1682,9 +1825,16 @@
                 padding: 12px;
                 min-height: 46px;
             }
+            .article-modal-box {
+                padding: 24px 16px 20px;
+            }
+            .article-modal-box .article-title {
+                font-size: 20px;
+            }
+            .article-modal-box .article-body {
+                font-size: 14.5px;
+            }
         }
-
-        /* ── ≤480px ────────────────────── */
         @media (max-width: 480px) {
             .wrap {
                 padding: 0 14px;
@@ -1772,25 +1922,6 @@
             .footer-brand {
                 grid-column: 1;
             }
-            .score-card {
-                padding: 16px;
-                border-radius: 10px;
-            }
-            .score-left {
-                gap: 10px;
-                padding-bottom: 14px;
-            }
-            .gauge-wrap {
-                width: 90px;
-                height: 90px;
-            }
-            .gauge-num {
-                font-size: 24px;
-            }
-            .gauge-sub {
-                font-size: 11px;
-                max-width: 140px;
-            }
             .btn {
                 padding: 11px 18px;
                 font-size: 13px;
@@ -1845,6 +1976,21 @@
                 font-size: 13px;
                 padding: 11px;
                 min-height: 42px;
+            }
+            .article-modal-box {
+                padding: 20px 14px 18px;
+                border-radius: 10px 10px 0 0;
+            }
+            .article-modal-box .article-title {
+                font-size: 18px;
+            }
+            .article-modal-box .article-body {
+                font-size: 14px;
+            }
+            .article-modal-close {
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
             }
         }
     </style>
@@ -2075,7 +2221,6 @@
             <div class="assess-grid">
                 <div class="assess-copy">
                     <span class="eyebrow">Free Legal Health Check</span>
-                    <!-- Added initiative note -->
                     <p class="initiative-note">An initiative by 2C Legal Advisory's Legal Clinic</p>
                     <h2>Find the legal gaps that could slow down your startup.</h2>
                     <p>Answer a guided set of questions about your company, contracts, data practices, team, intellectual property, and regulatory obligations. You will receive a personalised legal health score and a practical breakdown of what needs attention.</p>
@@ -2098,524 +2243,611 @@
                         <a class="tool-open" href="legal-health-check.html" target="_blank" rel="noopener">Open ↗</a>
                     </div>
                     <div class="tool-frame-wrap">
-                        <iframe
-                        class="tool-frame"
-                        src="legal-health-check.html"
-                        title="Free Legal Health Check by 2C Legal Advisory"
-                        loading="lazy"
-                        referrerpolicy="strict-origin-when-cross-origin">
-                    </iframe>
-                </div>
-                <div class="tool-note">The health check provides general information and does not replace legal advice tailored to your circumstances.</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════ ABOUT ═══════════ -->
-<section class="about" id="about">
-    <div class="wrap">
-        <div class="about-grid">
-            <div class="about-copy">
-                <span class="eyebrow">About 2C Legal</span>
-                <h2>Built for founders who move fast — and still need to get it right.</h2>
-                <p>2C Legal was started because too many founders were learning legal lessons the expensive way: after a bad contract, a missed compliance step, or a dispute over who actually owns the code. We work as an embedded legal partner for startups and technology companies, translating dense legal requirements into clear decisions you can act on.</p>
-                <p>Our team combines traditional corporate and commercial law with deep familiarity in technology, data, and intellectual property — including trademark and patent protection, and the software licensing agreements that determine how your product can be sold, white-labeled, or integrated by others. We pair that expertise with our AI Legal Assessment tool, so every engagement starts with a clear picture of where you stand.</p>
-                <div class="about-values">
-                    <div class="about-value"><span class="dot"></span><div><h4>Built for builders</h4><p>We speak the language of product and engineering teams, not just legal departments.</p></div></div>
-                    <div class="about-value"><span class="dot"></span><div><h4>Protection first</h4><p>From IP management to data privacy, we close gaps before they become liabilities.</p></div></div>
-                    <div class="about-value"><span class="dot"></span><div><h4>Investment-ready</h4><p>We prepare the documentation and structure that due diligence actually looks for.</p></div></div>
+                        <iframe class="tool-frame" src="legal-health-check.html" title="Free Legal Health Check by 2C Legal Advisory" loading="lazy" referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                    <div class="tool-note">The health check provides general information and does not replace legal advice tailored to your circumstances.</div>
                 </div>
             </div>
-            <div class="stat-grid">
-                <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Startups &amp; companies advised</div></div>
-                <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Contracts &amp; licenses drafted</div></div>
-                <div class="stat-card"><div class="stat-num">₦2.4B+</div><div class="stat-label">Funding rounds supported</div></div>
-                <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Industries served</div></div>
+        </div>
+    </section>
+
+    <!-- ═══════════ ABOUT ═══════════ -->
+    <section class="about" id="about">
+        <div class="wrap">
+            <div class="about-grid">
+                <div class="about-copy">
+                    <span class="eyebrow">About 2C Legal</span>
+                    <h2>Built for founders who move fast — and still need to get it right.</h2>
+                    <p>2C Legal was started because too many founders were learning legal lessons the expensive way: after a bad contract, a missed compliance step, or a dispute over who actually owns the code. We work as an embedded legal partner for startups and technology companies, translating dense legal requirements into clear decisions you can act on.</p>
+                    <p>Our team combines traditional corporate and commercial law with deep familiarity in technology, data, and intellectual property — including trademark and patent protection, and the software licensing agreements that determine how your product can be sold, white-labeled, or integrated by others. We pair that expertise with our AI Legal Assessment tool, so every engagement starts with a clear picture of where you stand.</p>
+                    <div class="about-values">
+                        <div class="about-value"><span class="dot"></span><div><h4>Built for builders</h4><p>We speak the language of product and engineering teams, not just legal departments.</p></div></div>
+                        <div class="about-value"><span class="dot"></span><div><h4>Protection first</h4><p>From IP management to data privacy, we close gaps before they become liabilities.</p></div></div>
+                        <div class="about-value"><span class="dot"></span><div><h4>Investment-ready</h4><p>We prepare the documentation and structure that due diligence actually looks for.</p></div></div>
+                    </div>
+                </div>
+                <div class="stat-grid">
+                    <div class="stat-card"><div class="stat-num">120+</div><div class="stat-label">Startups &amp; companies advised</div></div>
+                    <div class="stat-card"><div class="stat-num">300+</div><div class="stat-label">Contracts &amp; licenses drafted</div></div>
+                    <div class="stat-card"><div class="stat-num">₦2.4B+</div><div class="stat-label">Funding rounds supported</div></div>
+                    <div class="stat-card"><div class="stat-num">8+</div><div class="stat-label">Industries served</div></div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- ═══════════ CTA BAND ═══════════ -->
-<section id="contact">
-    <div class="cta-band">
-        <div>
-            <h2>Tell us what you're building.</h2>
-            <p>Most engagements start with a short call to understand the company and the gap. No obligation, no jargon.</p>
+    <!-- ═══════════ CTA BAND ═══════════ -->
+    <section id="contact">
+        <div class="cta-band">
+            <div>
+                <h2>Tell us what you're building.</h2>
+                <p>Most engagements start with a short call to understand the company and the gap. No obligation, no jargon.</p>
+            </div>
+            <a href="#" class="btn btn-primary modal-trigger" data-modal="consultModal">Book a Strategy Call</a>
         </div>
-        <a href="#" class="btn btn-primary modal-trigger" data-modal="consultModal">Book a Strategy Call</a>
-    </div>
-</section>
+    </section>
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer id="footer-resources">
-    <div class="wrap">
-        <div class="footer-top">
-            <div class="footer-brand">
-                <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
-                <p>A technology-driven law firm helping startups build robust legal foundations, protect IP and software, and scale with confidence.</p>
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer id="footer-resources">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#" class="logo"><img src="2clogo.png" alt="2C Legal Advisory" /></a>
+                    <p>A technology-driven law firm helping startups build robust legal foundations, protect IP and software, and scale with confidence.</p>
+                </div>
+                <div class="footer-col">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Practice Areas</h5>
+                    <ul>
+                        <li><a href="#services">Technology Law</a></li>
+                        <li><a href="#services">IP &amp; Software Licensing</a></li>
+                        <li><a href="#services">All Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="legal-health-check.html">Legal Health Check</a></li>
+                        <li><a href="#footer-resources">Startup Blueprint Series</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>Contact Us</h5>
+                    <ul>
+                        <li><a href="mailto:2c.legaladvisory@gmail.com">2c.legaladvisory@gmail.com</a></li>
+                        <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-col">
-                <h5>Quick Links</h5>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>Practice Areas</h5>
-                <ul>
-                    <li><a href="#services">Technology Law</a></li>
-                    <li><a href="#services">IP &amp; Software Licensing</a></li>
-                    <li><a href="#services">All Services</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>Resources</h5>
-                <ul>
-                    <li><a href="legal-health-check.html">Legal Health Check</a></li>
-                    <li><a href="#footer-resources">Startup Blueprint Series</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>Contact Us</h5>
-                <ul>
-                    <li><a href="mailto:2c.legaladvisory@gmail.com">2c.legaladvisory@gmail.com</a></li>
-                    <li><a href="tel:+2348001234567">+234 800 000 0000</a></li>
-                </ul>
+            <div class="footer-bottom">
+                <div>© 2026 2C Legal Advisory. All rights reserved.</div>
+                <div class="socials">
+                    <a href="#" aria-label="X (Twitter)">𝕏</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="Instagram">◎</a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div>© 2026 2C Legal Advisory. All rights reserved.</div>
-            <div class="socials">
-                <a href="#" aria-label="X (Twitter)">𝕏</a>
-                <a href="#" aria-label="LinkedIn">in</a>
-                <a href="#" aria-label="Instagram">◎</a>
-            </div>
+    </footer>
+
+    <!-- ═══════════ CONSULT MODAL ═══════════ -->
+    <div class="modal-overlay" id="consultModal">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button class="modal-close" id="modalClose" aria-label="Close consultation form">✕</button>
+            <h2 id="modalTitle">Book a Strategy Call</h2>
+            <p class="sub">Tell us a bit about yourself and what you're working on. We'll reach out within 24 hours to schedule a time that works for you.</p>
+
+            <form class="modal-form" id="consultForm" action="mailto:2c.legaladvisory@gmail.com" method="POST" enctype="text/plain">
+                <input type="hidden" name="subject" value="New Consultation Request" />
+
+                <div class="field">
+                    <label for="modalName">Full name *</label>
+                    <input type="text" id="modalName" name="Name" required placeholder="e.g. Adegoke Ogunlade" />
+                </div>
+
+                <div class="field">
+                    <label for="modalEmail">Email address *</label>
+                    <input type="email" id="modalEmail" name="Email" required placeholder="you@company.com" />
+                </div>
+
+                <div class="field">
+                    <label for="modalPhone">Phone number</label>
+                    <input type="tel" id="modalPhone" name="Phone" placeholder="+234 800 000 0000" />
+                </div>
+
+                <div class="field">
+                    <label for="modalTime">Preferred time for a call</label>
+                    <select id="modalTime" name="Preferred Time">
+                        <option value="">Select a time slot</option>
+                        <option value="Morning (9am – 12pm WAT)">Morning (9am – 12pm WAT)</option>
+                        <option value="Afternoon (12pm – 4pm WAT)">Afternoon (12pm – 4pm WAT)</option>
+                        <option value="Evening (4pm – 7pm WAT)">Evening (4pm – 7pm WAT)</option>
+                        <option value="Flexible — I'll adjust">Flexible — I'll adjust</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label for="modalMessage">What are you hoping to discuss?</label>
+                    <textarea id="modalMessage" name="Message" placeholder="Briefly describe your company, what you're building, and what legal support you need."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Send Request →</button>
+                <div class="fine">We'll reply within 24 hours. No obligation, no jargon.</div>
+            </form>
         </div>
     </div>
-</footer>
 
-<!-- ═══════════ MODAL ═══════════ -->
-<div class="modal-overlay" id="consultModal">
-    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="modal-close" id="modalClose" aria-label="Close consultation form">✕</button>
-        <h2 id="modalTitle">Book a Strategy Call</h2>
-        <p class="sub">Tell us a bit about yourself and what you're working on. We'll reach out within 24 hours to schedule a time that works for you.</p>
-
-        <form class="modal-form" id="consultForm" action="mailto:2c.legaladvisory@gmail.com" method="POST" enctype="text/plain">
-            <input type="hidden" name="subject" value="New Consultation Request" />
-
-            <div class="field">
-                <label for="modalName">Full name *</label>
-                <input type="text" id="modalName" name="Name" required placeholder="e.g. Adegoke Ogunlade" />
+    <!-- ═══════════ ARTICLE MODAL ═══════════ -->
+    <div class="article-modal-overlay" id="articleModal">
+        <div class="article-modal-box" role="dialog" aria-modal="true" aria-labelledby="articleModalTitle">
+            <button class="article-modal-close" id="articleModalClose" aria-label="Close article">✕</button>
+            <h2 class="article-title" id="articleModalTitle"></h2>
+            <div class="article-meta-top">
+                <span class="cat" id="articleModalCategory"></span>
+                <span class="date" id="articleModalDate"></span>
             </div>
-
-            <div class="field">
-                <label for="modalEmail">Email address *</label>
-                <input type="email" id="modalEmail" name="Email" required placeholder="you@company.com" />
-            </div>
-
-            <div class="field">
-                <label for="modalPhone">Phone number</label>
-                <input type="tel" id="modalPhone" name="Phone" placeholder="+234 800 000 0000" />
-            </div>
-
-            <div class="field">
-                <label for="modalTime">Preferred time for a call</label>
-                <select id="modalTime" name="Preferred Time">
-                    <option value="">Select a time slot</option>
-                    <option value="Morning (9am – 12pm WAT)">Morning (9am – 12pm WAT)</option>
-                    <option value="Afternoon (12pm – 4pm WAT)">Afternoon (12pm – 4pm WAT)</option>
-                    <option value="Evening (4pm – 7pm WAT)">Evening (4pm – 7pm WAT)</option>
-                    <option value="Flexible — I'll adjust">Flexible — I'll adjust</option>
-                </select>
-            </div>
-
-            <div class="field">
-                <label for="modalMessage">What are you hoping to discuss?</label>
-                <textarea id="modalMessage" name="Message" placeholder="Briefly describe your company, what you're building, and what legal support you need."></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit">Send Request →</button>
-            <div class="fine">We'll reply within 24 hours. No obligation, no jargon.</div>
-        </form>
+            <div class="article-body" id="articleModalBody"></div>
+        </div>
     </div>
-</div>
 
-<script>
-    (function() {
-        const burger = document.getElementById('burger');
-        const navlinks = document.getElementById('navlinks');
-        const navOverlay = document.getElementById('navOverlay');
-        const navLinksAnchors = navlinks.querySelectorAll('a');
-        let menuOpen = false;
+    <script>
+        /* ══════════════════════════════════════════════════
+           BURGER MENU
+           ══════════════════════════════════════════════════ */
+        (function() {
+            const burger = document.getElementById('burger');
+            const navlinks = document.getElementById('navlinks');
+            const navOverlay = document.getElementById('navOverlay');
+            const navLinksAnchors = navlinks.querySelectorAll('a');
+            let menuOpen = false;
 
-        function openMenu() {
-            menuOpen = true;
-            navlinks.classList.add('active');
-            burger.classList.add('active');
-            burger.setAttribute('aria-expanded', 'true');
-            navOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeMenu() {
-            menuOpen = false;
-            navlinks.classList.remove('active');
-            burger.classList.remove('active');
-            burger.setAttribute('aria-expanded', 'false');
-            navOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function toggleMenu() {
-            if (menuOpen) {
-                closeMenu();
-            } else {
-                openMenu();
+            function openMenu() {
+                menuOpen = true;
+                navlinks.classList.add('active');
+                burger.classList.add('active');
+                burger.setAttribute('aria-expanded', 'true');
+                navOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
-        }
 
-        burger.addEventListener('click', toggleMenu);
-        navOverlay.addEventListener('click', closeMenu);
+            function closeMenu() {
+                menuOpen = false;
+                navlinks.classList.remove('active');
+                burger.classList.remove('active');
+                burger.setAttribute('aria-expanded', 'false');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
 
-        navLinksAnchors.forEach(function(link) {
-            link.addEventListener('click', function() {
-                if (menuOpen) {
+            function toggleMenu() {
+                menuOpen ? closeMenu() : openMenu();
+            }
+
+            burger.addEventListener('click', toggleMenu);
+            navOverlay.addEventListener('click', closeMenu);
+
+            navLinksAnchors.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    if (menuOpen) closeMenu();
+                });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && menuOpen) {
                     closeMenu();
+                    burger.focus();
                 }
             });
-        });
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && menuOpen) {
-                closeMenu();
-                burger.focus();
-            }
-        });
-
-        let resizeTimer;
-        window.addEventListener('resize', function() {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(function() {
-                if (window.innerWidth > 768 && menuOpen) {
-                    closeMenu();
-                }
-            }, 150);
-        });
-    })();
-
-    /* ═══════════ BLOGGER ARTICLE INTEGRATION ═══════════ */
-    (function() {
-        const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
-        const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
-        const grid = document.getElementById('articlesGrid');
-        let completed = false;
-
-        function stripHtml(html) {
-            const temp = document.createElement('div');
-            temp.innerHTML = html || '';
-            return (temp.textContent || temp.innerText || '')
-                .replace(/\s+/g, ' ')
-                .trim();
-        }
-
-        function truncate(text, maxLength) {
-            if (!text || text.length <= maxLength) return text || '';
-            const shortened = text.slice(0, maxLength + 1);
-            const lastSpace = shortened.lastIndexOf(' ');
-            return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
-        }
-
-        function formatDate(value) {
-            const date = new Date(value);
-            if (Number.isNaN(date.getTime())) return '';
-            return new Intl.DateTimeFormat('en-NG', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }).format(date);
-        }
-
-        function getPostUrl(entry) {
-            const links = Array.isArray(entry.link) ? entry.link : [];
-            const alternate = links.find(function(link) {
-                return link.rel === 'alternate' && link.href;
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (window.innerWidth > 768 && menuOpen) closeMenu();
+                }, 150);
             });
-            return alternate ? alternate.href : BLOG_URL;
-        }
+        })();
 
-        function getCategory(entry) {
-            const categories = Array.isArray(entry.category) ? entry.category : [];
-            return categories.length && categories[0].term ? categories[0].term : 'Insights';
-        }
+        /* ══════════════════════════════════════════════════
+           BLOGGER ARTICLES + EXPANDABLE MODAL
+           ══════════════════════════════════════════════════ */
+        (function() {
+            const BLOG_URL = 'https://playbookbymissb.blogspot.com/';
+            const FEED_URL = BLOG_URL + 'feeds/posts/default?alt=json-in-script&max-results=6&callback=renderBloggerArticles';
+            const grid = document.getElementById('articlesGrid');
+            let articlesData = [];
+            let completed = false;
 
-        function makeArticleCard(entry) {
-            const url = getPostUrl(entry);
-            const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
-            const rawBody = entry.summary && entry.summary.$t ?
-                entry.summary.$t :
-                (entry.content && entry.content.$t ? entry.content.$t : '');
-            const excerpt = truncate(stripHtml(rawBody), 185);
-            const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
-            const category = getCategory(entry);
-
-            const article = document.createElement('article');
-            article.className = 'article-card is-blog-post';
-
-            const categoryEl = document.createElement('div');
-            categoryEl.className = 'article-category';
-            categoryEl.textContent = category;
-
-            const heading = document.createElement('h3');
-            const titleLink = document.createElement('a');
-            titleLink.href = url;
-            titleLink.target = '_blank';
-            titleLink.rel = 'noopener noreferrer';
-            titleLink.textContent = title;
-            heading.appendChild(titleLink);
-
-            const excerptEl = document.createElement('p');
-            excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
-
-            const meta = document.createElement('div');
-            meta.className = 'article-meta';
-
-            const dateEl = document.createElement('span');
-            dateEl.className = 'date';
-            dateEl.textContent = date;
-
-            const readMore = document.createElement('a');
-            readMore.className = 'read-more';
-            readMore.href = url;
-            readMore.target = '_blank';
-            readMore.rel = 'noopener noreferrer';
-            readMore.textContent = 'Read more →';
-
-            meta.appendChild(dateEl);
-            meta.appendChild(readMore);
-            article.appendChild(categoryEl);
-            article.appendChild(heading);
-            article.appendChild(excerptEl);
-            article.appendChild(meta);
-
-            return article;
-        }
-
-        function showFeedError() {
-            if (completed || !grid) return;
-            completed = true;
-            grid.setAttribute('aria-busy', 'false');
-            grid.innerHTML = '';
-
-            const fallback = document.createElement('div');
-            fallback.className = 'articles-fallback';
-            fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
-
-            const link = document.createElement('a');
-            link.href = BLOG_URL;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.textContent = 'Read them on Playbook by Miss B →';
-            fallback.appendChild(link);
-            grid.appendChild(fallback);
-        }
-
-        window.renderBloggerArticles = function(data) {
-            if (!grid) return;
-            const entries = data && data.feed && Array.isArray(data.feed.entry) ?
-                data.feed.entry :
-                [];
-
-            if (!entries.length) {
-                showFeedError();
-                return;
+            // ── utilities ──────────────────────────────
+            function stripHtml(html) {
+                const temp = document.createElement('div');
+                temp.innerHTML = html || '';
+                return (temp.textContent || temp.innerText || '').replace(/\s+/g, ' ').trim();
             }
 
-            completed = true;
-            grid.innerHTML = '';
-            grid.setAttribute('aria-busy', 'false');
-
-            entries.slice(0, 6).forEach(function(entry) {
-                grid.appendChild(makeArticleCard(entry));
-            });
-        };
-
-        if (!grid) return;
-
-        const feedScript = document.createElement('script');
-        feedScript.src = FEED_URL;
-        feedScript.async = true;
-        feedScript.onerror = showFeedError;
-        document.body.appendChild(feedScript);
-
-        window.setTimeout(showFeedError, 9000);
-    })();
-
-    /* ═══════════ MODAL LOGIC ═══════════ */
-    (function() {
-        const modal = document.getElementById('consultModal');
-        const closeBtn = document.getElementById('modalClose');
-        const form = document.getElementById('consultForm');
-        const triggers = document.querySelectorAll('.modal-trigger');
-
-        let isOpen = false;
-        let focusableElements = [];
-        let firstFocusable = null;
-        let lastFocusable = null;
-
-        function getFocusable() {
-            const all = modal.querySelectorAll(
-                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-            );
-            return Array.from(all).filter(function(el) {
-                return !el.disabled && el.offsetParent !== null;
-            });
-        }
-
-        function openModal() {
-            if (isOpen) return;
-            isOpen = true;
-            modal.classList.add('active');
-            document.body.classList.add('modal-open');
-
-            focusableElements = getFocusable();
-            firstFocusable = focusableElements[0] || null;
-            lastFocusable = focusableElements[focusableElements.length - 1] || null;
-
-            setTimeout(function() {
-                const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
-                if (firstInput) firstInput.focus();
-            }, 100);
-
-            document.documentElement.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            if (!isOpen) return;
-            isOpen = false;
-            modal.classList.remove('active');
-            document.body.classList.remove('modal-open');
-            document.documentElement.style.overflow = '';
-            const lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
-            if (lastTrigger) lastTrigger.focus();
-        }
-
-        triggers.forEach(function(trigger) {
-            trigger.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
-            });
-        });
-
-        closeBtn.addEventListener('click', closeModal);
-
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isOpen) {
-                closeModal();
-            }
-        });
-
-        modal.addEventListener('keydown', function(e) {
-            if (e.key !== 'Tab') return;
-            if (!focusableElements.length) return;
-
-            const focusable = getFocusable();
-            const first = focusable[0];
-            const last = focusable[focusable.length - 1];
-
-            if (e.shiftKey && document.activeElement === first) {
-                e.preventDefault();
-                last.focus();
-            } else if (!e.shiftKey && document.activeElement === last) {
-                e.preventDefault();
-                first.focus();
-            }
-        });
-
-        const observer = new MutationObserver(function() {
-            if (isOpen) {
-                focusableElements = getFocusable();
-                firstFocusable = focusableElements[0] || null;
-                lastFocusable = focusableElements[focusableElements.length - 1] || null;
-            }
-        });
-        observer.observe(modal, { childList: true, subtree: true });
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('modalName').value.trim();
-            const email = document.getElementById('modalEmail').value.trim();
-            const phone = document.getElementById('modalPhone').value.trim();
-            const time = document.getElementById('modalTime').value;
-            const message = document.getElementById('modalMessage').value.trim();
-
-            if (!name || !email) {
-                alert('Please fill in your name and email address.');
-                return;
+            function truncate(text, maxLength) {
+                if (!text || text.length <= maxLength) return text || '';
+                const shortened = text.slice(0, maxLength + 1);
+                const lastSpace = shortened.lastIndexOf(' ');
+                return (lastSpace > 80 ? shortened.slice(0, lastSpace) : shortened.slice(0, maxLength)).trim() + '…';
             }
 
-            let body = 'New consultation request from 2C Legal website:\n\n';
-            body += 'Name: ' + name + '\n';
-            body += 'Email: ' + email + '\n';
-            if (phone) body += 'Phone: ' + phone + '\n';
-            if (time) body += 'Preferred time: ' + time + '\n';
-            if (message) body += '\nMessage:\n' + message + '\n';
+            function formatDate(value) {
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) return '';
+                return new Intl.DateTimeFormat('en-NG', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }).format(date);
+            }
 
-            const subject = 'Consultation Request from ' + name;
+            function getPostUrl(entry) {
+                const links = Array.isArray(entry.link) ? entry.link : [];
+                const alternate = links.find(function(link) { return link.rel === 'alternate' && link.href; });
+                return alternate ? alternate.href : BLOG_URL;
+            }
 
-            const mailtoUrl =
-                'mailto:2c.legaladvisory@gmail.com' +
-                '?subject=' + encodeURIComponent(subject) +
-                '&body=' + encodeURIComponent(body);
+            function getCategory(entry) {
+                const categories = Array.isArray(entry.category) ? entry.category : [];
+                return categories.length && categories[0].term ? categories[0].term : 'Insights';
+            }
 
-            window.location.href = mailtoUrl;
+            function getFullContent(entry) {
+                return entry.content && entry.content.$t ? entry.content.$t :
+                    (entry.summary && entry.summary.$t ? entry.summary.$t : '');
+            }
 
-            const btn = form.querySelector('.btn-submit');
-            const originalText = btn.textContent;
-            btn.textContent = '✓ Sent! Opening your email…';
-            btn.disabled = true;
-            btn.style.opacity = '0.7';
+            // ── render article card ─────────────────────
+            function makeArticleCard(entry, index) {
+                const url = getPostUrl(entry);
+                const title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
+                const rawFull = getFullContent(entry);
+                const rawExcerpt = entry.summary && entry.summary.$t ? entry.summary.$t : rawFull;
+                const excerpt = truncate(stripHtml(rawExcerpt), 185);
+                const date = formatDate(entry.published && entry.published.$t ? entry.published.$t : '');
+                const category = getCategory(entry);
 
-            setTimeout(function() {
-                closeModal();
+                const article = document.createElement('article');
+                article.className = 'article-card is-blog-post';
+                article.dataset.index = index;
+
+                const categoryEl = document.createElement('div');
+                categoryEl.className = 'article-category';
+                categoryEl.textContent = category;
+
+                const heading = document.createElement('h3');
+                const titleLink = document.createElement('a');
+                titleLink.href = url;
+                titleLink.target = '_blank';
+                titleLink.rel = 'noopener noreferrer';
+                titleLink.textContent = title;
+                heading.appendChild(titleLink);
+
+                const excerptEl = document.createElement('p');
+                excerptEl.textContent = excerpt || 'Read the full article on Playbook by Miss B.';
+
+                const meta = document.createElement('div');
+                meta.className = 'article-meta';
+
+                const dateEl = document.createElement('span');
+                dateEl.className = 'date';
+                dateEl.textContent = date;
+
+                const readMore = document.createElement('button');
+                readMore.className = 'read-more';
+                readMore.textContent = 'Read more →';
+                readMore.setAttribute('aria-label', 'Read full article: ' + title);
+                readMore.type = 'button';
+
+                // Store data for modal
+                readMore.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openArticleModal(index);
+                });
+
+                meta.appendChild(dateEl);
+                meta.appendChild(readMore);
+                article.appendChild(categoryEl);
+                article.appendChild(heading);
+                article.appendChild(excerptEl);
+                article.appendChild(meta);
+
+                return article;
+            }
+
+            // ── modal controls ──────────────────────────
+            const articleModal = document.getElementById('articleModal');
+            const articleModalClose = document.getElementById('articleModalClose');
+            const articleModalTitle = document.getElementById('articleModalTitle');
+            const articleModalCategory = document.getElementById('articleModalCategory');
+            const articleModalDate = document.getElementById('articleModalDate');
+            const articleModalBody = document.getElementById('articleModalBody');
+            let articleModalOpen = false;
+
+            function openArticleModal(index) {
+                const data = articlesData[index];
+                if (!data) return;
+
+                articleModalTitle.textContent = data.title;
+                articleModalCategory.textContent = data.category;
+                articleModalDate.textContent = data.date;
+                articleModalBody.innerHTML = data.fullContent || '<p>No content available.</p>';
+
+                articleModal.classList.add('active');
+                document.body.classList.add('modal-open');
+                document.documentElement.style.overflow = 'hidden';
+                articleModalOpen = true;
+
+                // Focus the close button after a short delay
                 setTimeout(function() {
-                    form.reset();
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                }, 300);
-            }, 1200);
-        });
+                    articleModalClose.focus();
+                }, 150);
 
-        const headerBookBtn = document.querySelector('.book-desktop');
-        if (headerBookBtn) {
-            headerBookBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
+                // Trap focus inside modal
+                trapFocus(articleModal);
+            }
+
+            function closeArticleModal() {
+                if (!articleModalOpen) return;
+                articleModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                document.documentElement.style.overflow = '';
+                articleModalOpen = false;
+
+                // Return focus to the "Read more" button that was clicked
+                const activeReadMore = document.querySelector('.article-card .read-more:focus');
+                if (activeReadMore) {
+                    activeReadMore.focus();
+                }
+            }
+
+            // ── focus trapping ──────────────────────────
+            function trapFocus(container) {
+                const focusable = container.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                );
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+
+                container.addEventListener('keydown', function trap(e) {
+                    if (e.key !== 'Tab') return;
+                    if (e.shiftKey && document.activeElement === first) {
+                        e.preventDefault();
+                        last.focus();
+                    } else if (!e.shiftKey && document.activeElement === last) {
+                        e.preventDefault();
+                        first.focus();
+                    }
+                });
+
+                // Store cleanup
+                container._trapCleanup = function() {
+                    container.removeEventListener('keydown', trap);
+                };
+            }
+
+            // ── modal close events ──────────────────────
+            articleModalClose.addEventListener('click', closeArticleModal);
+
+            articleModal.addEventListener('click', function(e) {
+                if (e.target === articleModal) {
+                    closeArticleModal();
+                }
             });
-        }
 
-        const heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
-        if (heroBookBtn && heroBookBtn.textContent.trim() === 'Book a Call') {
-            heroBookBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                openModal();
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && articleModalOpen) {
+                    closeArticleModal();
+                }
             });
-        }
 
-        window.__modal = { open: openModal, close: closeModal };
-    })();
-</script>
-<script src="homepage-booking-resend.js"></script>
+            // ── render from feed ────────────────────────
+            window.renderBloggerArticles = function(data) {
+                if (!grid) return;
+                const entries = data && data.feed && Array.isArray(data.feed.entry) ?
+                    data.feed.entry :
+                    [];
+
+                if (!entries.length) {
+                    showFeedError();
+                    return;
+                }
+
+                completed = true;
+                grid.innerHTML = '';
+                grid.setAttribute('aria-busy', 'false');
+
+                // Store full data
+                articlesData = entries.map(function(entry, idx) {
+                    const fullContent = getFullContent(entry);
+                    return {
+                        title: entry.title && entry.title.$t ? entry.title.$t : 'Untitled',
+                        url: getPostUrl(entry),
+                        category: getCategory(entry),
+                        date: formatDate(entry.published && entry.published.$t ? entry.published.$t : ''),
+                        fullContent: fullContent,
+                    };
+                });
+
+                entries.slice(0, 6).forEach(function(entry, idx) {
+                    grid.appendChild(makeArticleCard(entry, idx));
+                });
+            };
+
+            function showFeedError() {
+                if (completed || !grid) return;
+                completed = true;
+                grid.setAttribute('aria-busy', 'false');
+                grid.innerHTML = '';
+
+                const fallback = document.createElement('div');
+                fallback.className = 'articles-fallback';
+                fallback.appendChild(document.createTextNode('The latest articles could not be loaded right now. '));
+
+                const link = document.createElement('a');
+                link.href = BLOG_URL;
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+                link.textContent = 'Read them on Playbook by Miss B →';
+                fallback.appendChild(link);
+                grid.appendChild(fallback);
+            }
+
+            // ── bootstrap ────────────────────────────────
+            if (!grid) return;
+
+            const feedScript = document.createElement('script');
+            feedScript.src = FEED_URL;
+            feedScript.async = true;
+            feedScript.onerror = showFeedError;
+            document.body.appendChild(feedScript);
+
+            window.setTimeout(showFeedError, 9000);
+        })();
+
+        /* ══════════════════════════════════════════════════
+           CONSULT MODAL
+           ══════════════════════════════════════════════════ */
+        (function() {
+            const modal = document.getElementById('consultModal');
+            const closeBtn = document.getElementById('modalClose');
+            const form = document.getElementById('consultForm');
+            const triggers = document.querySelectorAll('.modal-trigger');
+
+            let isOpen = false;
+
+            function openModal() {
+                if (isOpen) return;
+                isOpen = true;
+                modal.classList.add('active');
+                document.body.classList.add('modal-open');
+                document.documentElement.style.overflow = 'hidden';
+                setTimeout(function() {
+                    const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
+                    if (firstInput) firstInput.focus();
+                }, 100);
+            }
+
+            function closeModal() {
+                if (!isOpen) return;
+                isOpen = false;
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                document.documentElement.style.overflow = '';
+                const lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
+                if (lastTrigger) lastTrigger.focus();
+            }
+
+            triggers.forEach(function(trigger) {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isOpen) closeModal();
+            });
+
+            // Focus trap for consult modal
+            modal.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab') return;
+                const focusable = Array.from(modal.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )).filter(function(el) { return !el.disabled && el.offsetParent !== null; });
+                if (!focusable.length) return;
+                const first = focusable[0];
+                const last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('modalName').value.trim();
+                const email = document.getElementById('modalEmail').value.trim();
+                const phone = document.getElementById('modalPhone').value.trim();
+                const time = document.getElementById('modalTime').value;
+                const message = document.getElementById('modalMessage').value.trim();
+
+                if (!name || !email) {
+                    alert('Please fill in your name and email address.');
+                    return;
+                }
+
+                let body = 'New consultation request from 2C Legal website:\n\n';
+                body += 'Name: ' + name + '\n';
+                body += 'Email: ' + email + '\n';
+                if (phone) body += 'Phone: ' + phone + '\n';
+                if (time) body += 'Preferred time: ' + time + '\n';
+                if (message) body += '\nMessage:\n' + message + '\n';
+
+                const subject = 'Consultation Request from ' + name;
+                const mailtoUrl = 'mailto:2c.legaladvisory@gmail.com' +
+                    '?subject=' + encodeURIComponent(subject) +
+                    '&body=' + encodeURIComponent(body);
+
+                window.location.href = mailtoUrl;
+
+                const btn = form.querySelector('.btn-submit');
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Sent! Opening your email…';
+                btn.disabled = true;
+                btn.style.opacity = '0.7';
+
+                setTimeout(function() {
+                    closeModal();
+                    setTimeout(function() {
+                        form.reset();
+                        btn.textContent = originalText;
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                    }, 300);
+                }, 1200);
+            });
+
+            // Header and hero "Book a Call" buttons
+            const headerBookBtn = document.querySelector('.book-desktop');
+            if (headerBookBtn) {
+                headerBookBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+
+            const heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
+            if (heroBookBtn && heroBookBtn.textContent.trim() === 'Book a Call') {
+                heroBookBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+
+            window.__consultModal = { open: openModal, close: closeModal };
+        })();
+    </script>
+    <script src="homepage-booking-resend.js">
+    </script>
 </body>
 </html>
