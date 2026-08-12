@@ -1229,7 +1229,7 @@
             background: var(--accent);
         }
 
-        /* ── Consult modal (unchanged) ─────────────── */
+        /* ── Consult modal (fixed: HTTPS endpoint) ─── */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1374,6 +1374,33 @@
         }
         .modal-box::-webkit-scrollbar-thumb:hover {
             background: var(--accent);
+        }
+        /* status messages inside the consult modal */
+        .consult-status {
+            display: none;
+            margin: 0 0 16px;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 13px;
+            line-height: 1.55;
+            border: 1px solid var(--card-border);
+        }
+        .consult-status.sending {
+            display: block;
+            color: var(--ink-1);
+            background: var(--surface-3);
+        }
+        .consult-status.success {
+            display: block;
+            background: rgba(52, 211, 153, 0.10);
+            border-color: rgba(52, 211, 153, 0.30);
+            color: #a7f3d0;
+        }
+        .consult-status.error {
+            display: block;
+            background: rgba(251, 113, 133, 0.10);
+            border-color: rgba(251, 113, 133, 0.35);
+            color: #fecdd3;
         }
 
         /* ══════════════════════════════════════════════
@@ -2337,34 +2364,39 @@
         </div>
     </footer>
 
-    <!-- ═══════════ CONSULT MODAL ═══════════ -->
+    <!-- ═══════════ CONSULT MODAL (HTTPS POST + fetch) ═══════════ -->
     <div class="modal-overlay" id="consultModal">
         <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <button class="modal-close" id="modalClose" aria-label="Close consultation form">✕</button>
             <h2 id="modalTitle">Book a Strategy Call</h2>
             <p class="sub">Tell us a bit about yourself and what you're working on. We'll reach out within 24 hours to schedule a time that works for you.</p>
 
-            <form class="modal-form" id="consultForm" action="mailto:2c.legaladvisory@gmail.com" method="POST" enctype="text/plain">
-                <input type="hidden" name="subject" value="New Consultation Request" />
+            <!-- action uses the secure HTTPS endpoint; method="post" -->
+            <form class="modal-form" id="consultForm" action="https://2c-legal-report-email.b2bautomagic.workers.dev/" method="post" enctype="application/json">
+                <input type="hidden" name="type" value="booking" />
+                <input type="hidden" name="source" value="Homepage" />
+                <input type="hidden" name="submissionId" id="consultSubmissionId" value="" />
+
+                <div id="consultStatus" class="consult-status" aria-live="polite"></div>
 
                 <div class="field">
                     <label for="modalName">Full name *</label>
-                    <input type="text" id="modalName" name="Name" required placeholder="e.g. Adegoke Ogunlade" />
+                    <input type="text" id="modalName" name="name" required placeholder="e.g. Adegoke Ogunlade" autocomplete="name" />
                 </div>
 
                 <div class="field">
                     <label for="modalEmail">Email address *</label>
-                    <input type="email" id="modalEmail" name="Email" required placeholder="you@company.com" />
+                    <input type="email" id="modalEmail" name="userEmail" required placeholder="you@company.com" autocomplete="email" />
                 </div>
 
                 <div class="field">
                     <label for="modalPhone">Phone number</label>
-                    <input type="tel" id="modalPhone" name="Phone" placeholder="+234 800 000 0000" />
+                    <input type="tel" id="modalPhone" name="phone" placeholder="+234 800 000 0000" autocomplete="tel" />
                 </div>
 
                 <div class="field">
                     <label for="modalTime">Preferred time for a call</label>
-                    <select id="modalTime" name="Preferred Time">
+                    <select id="modalTime" name="preferredTime">
                         <option value="">Select a time slot</option>
                         <option value="Morning (9am – 12pm WAT)">Morning (9am – 12pm WAT)</option>
                         <option value="Afternoon (12pm – 4pm WAT)">Afternoon (12pm – 4pm WAT)</option>
@@ -2375,10 +2407,10 @@
 
                 <div class="field">
                     <label for="modalMessage">What are you hoping to discuss?</label>
-                    <textarea id="modalMessage" name="Message" placeholder="Briefly describe your company, what you're building, and what legal support you need."></textarea>
+                    <textarea id="modalMessage" name="discussion" placeholder="Briefly describe your company, what you're building, and what legal support you need."></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit">Send Request →</button>
+                <button type="submit" class="btn-submit" id="consultSubmitBtn">Send Request →</button>
                 <div class="fine">We'll reply within 24 hours. No obligation, no jargon.</div>
             </form>
         </div>
@@ -2456,9 +2488,243 @@
         })();
 
         /* ══════════════════════════════════════════════════
+           CONSULT MODAL — SECURE HTTPS POST (fetch)
+           Overrides any mailto: or http:// action automatically
+           ══════════════════════════════════════════════════ */
+        (function() {
+            const EMAIL_ENDPOINT = 'https://2c-legal-report-email.b2bautomagic.workers.dev/';
+            const modal = document.getElementById('consultModal');
+            const closeBtn = document.getElementById('modalClose');
+            const form = document.getElementById('consultForm');
+            const triggers = document.querySelectorAll('.modal-trigger');
+            const statusEl = document.getElementById('consultStatus');
+            const submitBtn = document.getElementById('consultSubmitBtn');
+            const submissionIdInput = document.getElementById('consultSubmissionId');
+
+            let isOpen = false;
+            let isSubmitting = false;
+
+            function newSubmissionId() {
+                return (window.crypto && crypto.randomUUID) ?
+                    crypto.randomUUID() :
+                    Date.now() + '-' + Math.random().toString(36).slice(2);
+            }
+
+            function setStatus(kind, message) {
+                if (!statusEl) return;
+                statusEl.className = 'consult-status';
+                if (kind === 'sending') {
+                    statusEl.className = 'consult-status sending';
+                    statusEl.textContent = message || 'Sending your request…';
+                } else if (kind === 'success') {
+                    statusEl.className = 'consult-status success';
+                    statusEl.textContent = message || '✓ Request sent. We\'ll be in touch within 24 hours.';
+                } else if (kind === 'error') {
+                    statusEl.className = 'consult-status error';
+                    statusEl.textContent = message || 'Something went wrong. Please try again.';
+                }
+                statusEl.style.display = 'block';
+            }
+
+            function clearStatus() {
+                if (!statusEl) return;
+                statusEl.className = 'consult-status';
+                statusEl.style.display = 'none';
+                statusEl.textContent = '';
+            }
+
+            function getField(id) {
+                const el = document.getElementById(id);
+                return el ? String(el.value || '').trim() : '';
+            }
+
+            function getSelectVal(id) {
+                const el = document.getElementById(id);
+                return el ? String(el.value || '').trim() : '';
+            }
+
+            function validEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+
+            // ── open / close ────────────────────────────
+            function openModal() {
+                if (isOpen) return;
+                isOpen = true;
+                clearStatus();
+                modal.classList.add('active');
+                document.body.classList.add('modal-open');
+                document.documentElement.style.overflow = 'hidden';
+                // reset submission ID
+                if (submissionIdInput) submissionIdInput.value = newSubmissionId();
+                setTimeout(function() {
+                    const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
+                    if (firstInput) firstInput.focus();
+                }, 100);
+            }
+
+            function closeModal() {
+                if (!isOpen) return;
+                isOpen = false;
+                isSubmitting = false;
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                document.documentElement.style.overflow = '';
+                clearStatus();
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Request →';
+                }
+                // focus the last trigger
+                var lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
+                if (lastTrigger) lastTrigger.focus();
+            }
+
+            // ── triggers ────────────────────────────────
+            triggers.forEach(function(trigger) {
+                trigger.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) closeModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isOpen) closeModal();
+            });
+
+            // trap focus inside modal
+            modal.addEventListener('keydown', function(e) {
+                if (e.key !== 'Tab') return;
+                var focusable = Array.from(modal.querySelectorAll(
+                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                )).filter(function(el) { return !el.disabled && el.offsetParent !== null; });
+                if (!focusable.length) return;
+                var first = focusable[0];
+                var last = focusable[focusable.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
+            });
+
+            // ── form submission (secure HTTPS POST) ─────
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                if (isSubmitting) return;
+
+                const name = getField('modalName');
+                const userEmail = getField('modalEmail');
+                const phone = getField('modalPhone');
+                const preferredTime = getSelectVal('modalTime');
+                const discussion = getField('modalMessage');
+
+                // validate
+                if (!name) {
+                    document.getElementById('modalName')?.focus();
+                    setStatus('error', 'Please enter your full name.');
+                    return;
+                }
+                if (!validEmail(userEmail)) {
+                    document.getElementById('modalEmail')?.focus();
+                    setStatus('error', 'Please enter a valid email address.');
+                    return;
+                }
+
+                const submissionId = submissionIdInput ? submissionIdInput.value : newSubmissionId();
+
+                const payload = {
+                    type: 'booking',
+                    submissionId: submissionId,
+                    userEmail: userEmail,
+                    name: name,
+                    phone: phone,
+                    preferredTime: preferredTime,
+                    discussion: discussion,
+                    source: 'Homepage (consult modal)',
+                };
+
+                isSubmitting = true;
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending…';
+                }
+                setStatus('sending', 'Sending your request and confirmation emails…');
+
+                try {
+                    const response = await fetch(EMAIL_ENDPOINT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                    });
+
+                    let data = {};
+                    try { data = await response.json(); } catch (_) {}
+
+                    if (!response.ok) {
+                        throw new Error(data.error || 'Email service returned ' + response.status);
+                    }
+
+                    setStatus('success', '✓ Request received. A confirmation was emailed to ' + userEmail +
+                        ', and 2C Legal Advisory received your booking details.');
+                    if (submitBtn) {
+                        submitBtn.textContent = '✓ Sent!';
+                    }
+
+                    // reset the form after a moment
+                    setTimeout(function() {
+                        form.reset();
+                        if (submitBtn) {
+                            submitBtn.textContent = 'Send Request →';
+                            submitBtn.disabled = false;
+                        }
+                        isSubmitting = false;
+                        // close modal after a delay
+                        setTimeout(closeModal, 1200);
+                    }, 1500);
+
+                } catch (err) {
+                    setStatus('error', err.message || 'We could not send your request. Please try again.');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Send Request →';
+                    }
+                    isSubmitting = false;
+                }
+            });
+
+            // also wire the "Book a Strategy Call" buttons that aren't .modal-trigger
+            const headerBtn = document.querySelector('.book-desktop');
+            if (headerBtn) {
+                headerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+
+            const heroBtn = document.querySelector('.hero-ctas .btn-ghost');
+            if (heroBtn && heroBtn.textContent.trim() === 'Book a Call') {
+                heroBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+
+            // expose for debugging
+            window.__consultModal = { open: openModal, close: closeModal };
+        })();
+
+        /* ══════════════════════════════════════════════════
            BLOGGER ARTICLES + EXPANDABLE MODAL
-           — The article "The Essence of Gifting in Corporate Organizations" is
-             filtered out and will never be displayed.
            ══════════════════════════════════════════════════ */
         (function() {
             var BLOG_URL = 'https://playbookbymissb.blogspot.com/';
@@ -2467,7 +2733,6 @@
             var articlesData = [];
             var completed = false;
 
-            // ── utility functions ──────────────────────
             function stripHtml(html) {
                 var temp = document.createElement('div');
                 temp.innerHTML = html || '';
@@ -2507,7 +2772,6 @@
                     (entry.summary && entry.summary.$t ? entry.summary.$t : '');
             }
 
-            // ── should we hide this article? ────────────
             function isHiddenArticle(title) {
                 var hideTitles = [
                     'The Essence of Gifting in Corporate Organizations'
@@ -2519,12 +2783,9 @@
                 });
             }
 
-            // ── render article card ─────────────────────
             function makeArticleCard(entry, index) {
                 var url = getPostUrl(entry);
                 var title = entry.title && entry.title.$t ? entry.title.$t : 'Untitled article';
-
-                // Safety: if this is the hidden article, skip entirely (should already be filtered)
                 if (isHiddenArticle(title)) return null;
 
                 var rawFull = getFullContent(entry);
@@ -2580,7 +2841,6 @@
                 return article;
             }
 
-            // ── modal controls ──────────────────────────
             var articleModal = document.getElementById('articleModal');
             var articleModalClose = document.getElementById('articleModalClose');
             var articleModalTitle = document.getElementById('articleModalTitle');
@@ -2623,7 +2883,6 @@
                 }
             }
 
-            // ── focus trapping ──────────────────────────
             function trapFocus(container) {
                 var focusable = container.querySelectorAll(
                     'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -2648,7 +2907,6 @@
                 };
             }
 
-            // ── modal close events ──────────────────────
             articleModalClose.addEventListener('click', closeArticleModal);
 
             articleModal.addEventListener('click', function(e) {
@@ -2663,7 +2921,6 @@
                 }
             });
 
-            // ── render from feed ────────────────────────
             window.renderBloggerArticles = function(data) {
                 if (!grid) return;
                 var entries = data && data.feed && Array.isArray(data.feed.entry) ?
@@ -2675,7 +2932,6 @@
                     return;
                 }
 
-                // ── FILTER: exclude the hidden article ──
                 var filteredEntries = entries.filter(function(entry) {
                     var title = entry.title && entry.title.$t ? entry.title.$t : '';
                     return !isHiddenArticle(title);
@@ -2690,7 +2946,6 @@
                 grid.innerHTML = '';
                 grid.setAttribute('aria-busy', 'false');
 
-                // Store filtered data for modal
                 articlesData = filteredEntries.map(function(entry, idx) {
                     var fullContent = getFullContent(entry);
                     return {
@@ -2702,13 +2957,11 @@
                     };
                 });
 
-                // Render up to 6 of the filtered articles
                 filteredEntries.slice(0, 6).forEach(function(entry, idx) {
                     var card = makeArticleCard(entry, idx);
                     if (card) grid.appendChild(card);
                 });
 
-                // If after filtering we have fewer than 3 cards, fill the grid with a message
                 if (grid.children.length === 0) {
                     showFeedError();
                 }
@@ -2733,7 +2986,6 @@
                 grid.appendChild(fallback);
             }
 
-            // ── bootstrap ────────────────────────────────
             if (!grid) return;
 
             var feedScript = document.createElement('script');
@@ -2746,134 +2998,86 @@
         })();
 
         /* ══════════════════════════════════════════════════
-           CONSULT MODAL
+           FORM ACTION OVERRIDE — automatically replaces
+           mailto: or http:// form actions with the secure
+           HTTPS endpoint before the user interacts.
            ══════════════════════════════════════════════════ */
         (function() {
-            var modal = document.getElementById('consultModal');
-            var closeBtn = document.getElementById('modalClose');
-            var form = document.getElementById('consultForm');
-            var triggers = document.querySelectorAll('.modal-trigger');
+            'use strict';
+            var SECURE_ENDPOINT = 'https://2c-legal-report-email.b2bautomagic.workers.dev/';
+            var OVERRIDE_ATTR = 'data-action-overridden';
 
-            var isOpen = false;
+            function overrideFormActions() {
+                var forms = document.querySelectorAll('form:not([' + OVERRIDE_ATTR + '])');
+                for (var i = 0; i < forms.length; i++) {
+                    var form = forms[i];
+                    var action = form.getAttribute('action') || '';
 
-            function openModal() {
-                if (isOpen) return;
-                isOpen = true;
-                modal.classList.add('active');
-                document.body.classList.add('modal-open');
-                document.documentElement.style.overflow = 'hidden';
-                setTimeout(function() {
-                    var firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea');
-                    if (firstInput) firstInput.focus();
-                }, 100);
+                    // if action is mailto: or http:// (insecure), override it
+                    if (/^mailto:/i.test(action) || /^http:\/\//i.test(action)) {
+                        form.setAttribute('action', SECURE_ENDPOINT);
+                        form.setAttribute('method', 'post');
+                        // ensure enctype is set for JSON payloads; we use fetch in most cases,
+                        // but this makes the form itself safe even without JS
+                        if (!form.getAttribute('enctype') || form.getAttribute('enctype') === 'text/plain') {
+                            form.setAttribute('enctype', 'application/json');
+                        }
+                        form.setAttribute(OVERRIDE_ATTR, 'true');
+                        // log it so devs know it was fixed
+                        console.log('[2C Legal] Overrode insecure form action: ' + action + ' → ' + SECURE_ENDPOINT);
+                    }
+                }
             }
 
-            function closeModal() {
-                if (!isOpen) return;
-                isOpen = false;
-                modal.classList.remove('active');
-                document.body.classList.remove('modal-open');
-                document.documentElement.style.overflow = '';
-                var lastTrigger = document.querySelector('.modal-trigger:focus') || triggers[0];
-                if (lastTrigger) lastTrigger.focus();
+            // run on DOM ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', overrideFormActions, { once: true });
+            } else {
+                overrideFormActions();
             }
 
-            triggers.forEach(function(trigger) {
-                trigger.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openModal();
-                });
-            });
-
-            closeBtn.addEventListener('click', closeModal);
-
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) closeModal();
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && isOpen) closeModal();
-            });
-
-            modal.addEventListener('keydown', function(e) {
-                if (e.key !== 'Tab') return;
-                var focusable = Array.from(modal.querySelectorAll(
-                    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-                )).filter(function(el) { return !el.disabled && el.offsetParent !== null; });
-                if (!focusable.length) return;
-                var first = focusable[0];
-                var last = focusable[focusable.length - 1];
-                if (e.shiftKey && document.activeElement === first) {
-                    e.preventDefault();
-                    last.focus();
-                } else if (!e.shiftKey && document.activeElement === last) {
-                    e.preventDefault();
-                    first.focus();
+            // also observe for dynamically added forms
+            var observer = new MutationObserver(function(mutations) {
+                for (var i = 0; i < mutations.length; i++) {
+                    var added = mutations[i].addedNodes;
+                    for (var j = 0; j < added.length; j++) {
+                        var node = added[j];
+                        if (node.nodeType === 1) {
+                            if (node.tagName === 'FORM') {
+                                var action = node.getAttribute('action') || '';
+                                if (/^mailto:/i.test(action) || /^http:\/\//i.test(action)) {
+                                    node.setAttribute('action', SECURE_ENDPOINT);
+                                    node.setAttribute('method', 'post');
+                                    if (!node.getAttribute('enctype') || node.getAttribute('enctype') === 'text/plain') {
+                                        node.setAttribute('enctype', 'application/json');
+                                    }
+                                    node.setAttribute(OVERRIDE_ATTR, 'true');
+                                    console.log('[2C Legal] Overrode insecure form action on dynamically added form: ' +
+                                        action + ' → ' + SECURE_ENDPOINT);
+                                }
+                            } else {
+                                // check for nested forms
+                                var nestedForms = node.querySelectorAll('form:not([' + OVERRIDE_ATTR + '])');
+                                for (var k = 0; k < nestedForms.length; k++) {
+                                    var f = nestedForms[k];
+                                    var act = f.getAttribute('action') || '';
+                                    if (/^mailto:/i.test(act) || /^http:\/\//i.test(act)) {
+                                        f.setAttribute('action', SECURE_ENDPOINT);
+                                        f.setAttribute('method', 'post');
+                                        if (!f.getAttribute('enctype') || f.getAttribute('enctype') === 'text/plain') {
+                                            f.setAttribute('enctype', 'application/json');
+                                        }
+                                        f.setAttribute(OVERRIDE_ATTR, 'true');
+                                        console.log('[2C Legal] Overrode insecure form action on nested form: ' + act +
+                                            ' → ' + SECURE_ENDPOINT);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             });
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
-                var name = document.getElementById('modalName').value.trim();
-                var email = document.getElementById('modalEmail').value.trim();
-                var phone = document.getElementById('modalPhone').value.trim();
-                var time = document.getElementById('modalTime').value;
-                var message = document.getElementById('modalMessage').value.trim();
-
-                if (!name || !email) {
-                    alert('Please fill in your name and email address.');
-                    return;
-                }
-
-                var body = 'New consultation request from 2C Legal website:\n\n';
-                body += 'Name: ' + name + '\n';
-                body += 'Email: ' + email + '\n';
-                if (phone) body += 'Phone: ' + phone + '\n';
-                if (time) body += 'Preferred time: ' + time + '\n';
-                if (message) body += '\nMessage:\n' + message + '\n';
-
-                var subject = 'Consultation Request from ' + name;
-                var mailtoUrl = 'mailto:2c.legaladvisory@gmail.com' +
-                    '?subject=' + encodeURIComponent(subject) +
-                    '&body=' + encodeURIComponent(body);
-
-                window.location.href = mailtoUrl;
-
-                var btn = form.querySelector('.btn-submit');
-                var originalText = btn.textContent;
-                btn.textContent = '✓ Sent! Opening your email…';
-                btn.disabled = true;
-                btn.style.opacity = '0.7';
-
-                setTimeout(function() {
-                    closeModal();
-                    setTimeout(function() {
-                        form.reset();
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                        btn.style.opacity = '1';
-                    }, 300);
-                }, 1200);
-            });
-
-            var headerBookBtn = document.querySelector('.book-desktop');
-            if (headerBookBtn) {
-                headerBookBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openModal();
-                });
-            }
-
-            var heroBookBtn = document.querySelector('.hero-ctas .btn-ghost');
-            if (heroBookBtn && heroBookBtn.textContent.trim() === 'Book a Call') {
-                heroBookBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openModal();
-                });
-            }
-
-            window.__consultModal = { open: openModal, close: closeModal };
+            observer.observe(document.documentElement, { childList: true, subtree: true });
         })();
     </script>
     <script src="homepage-booking-resend.js">
